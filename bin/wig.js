@@ -13,6 +13,7 @@ cli.command('build')
   .option('-t, --tmpl_dir <path>', 'Swig template dirctory (default:./templates)')
   .option('-o, --out_dir <path>', 'Output dirctory (default:./dist)')
   .option('-v, --verbose', 'Display rendered files names')
+  .option('-r, --renderer <name>', 'Renderer (defalut:swig)')
   .action(function(cmd){
 
     // setup options
@@ -24,6 +25,8 @@ cli.command('build')
     if(cmd.tmpl_dir){ opt.tmplDir = cmd.tmpl_dir; }
     if(cmd.out_dir){ opt.outDir = cmd.out_dir; }
     if(cmd.verbose){ opt.verbose = cmd.verbose; }
+    if(cmd.renderer){ opt.renderer = cmd.renderer; }
+
 
     // build
     var Wig = require('../lib');
