@@ -1,7 +1,7 @@
 {
   "name": "wig",
-  "version": "0.0.0",
-  "description": "static document build tool with swig",
+  "version": "0.0.1",
+  "description": "Static html build tool based on Node/Swig",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
