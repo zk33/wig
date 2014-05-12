@@ -1,0 +1,17 @@
+{
+  "value":"spam",
+  "_contents":{
+    "index":{
+      "title":"index"
+    },
+    "sub":{
+      "title":"sub",
+      "value":"egg"
+    },
+    "php":{
+      "title":"php",
+      "_ext":"php"
+    }
+  }
+}
+

@@ -1,10 +1,10 @@
 {
   "name": "wig",
-  "version": "0.0.1",
-  "description": "Static html build tool based on Node/Swig",
+  "version": "0.0.1-alpha",
+  "description": "Static html build tool based on node,swig",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "bin": {
     "wig": "./bin/wig.js"
@@ -24,6 +24,6 @@
     "lodash": "^2.4.1"
   },
   "devDependencies": {
-    "gulp": "^3.6.2"
+    "rimraf": "^2.2.8"
   }
 }
