@@ -11,6 +11,20 @@
     "php":{
       "title":"php",
       "_ext":"php"
+    },
+    "dir":{
+      "_contents":{
+        "dir2":{
+          "_contents":{
+            "quite-deep-page":{
+              "title":"quite deep page"
+            }
+          }
+        },
+        "deep-page":{
+          "title":"deep page"
+        }
+      }
     }
   }
 }
