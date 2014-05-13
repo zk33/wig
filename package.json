@@ -1,7 +1,7 @@
 {
   "name": "wig",
-  "version": "0.0.1-alpha",
-  "description": "Static html build tool based on node,swig",
+  "version": "0.0.1-alpha.1",
+  "description": "Static html build tool based on Node,Swig",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:zk33/wig.git"
+    "url": "git@github.com:zk33/wig.git"
   },
   "keywords": [
     "swig"
