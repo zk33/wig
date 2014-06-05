@@ -76,6 +76,7 @@ describe('Wig', function(){
       var pagefile = path.join(dist,'page-as-file.html');
       var deep = path.join(dist,'dir/deep-page.html');
       var quiteDeep = path.join(dist,'dir/dir2/quite-deep-page.html');
+      var js = path.join(dist,'js/index.html');
 
       assert(fs.existsSync(index),'index.html should generated');
       assert(fs.existsSync(php),'_ext parameter should override extension and should output php.php');
@@ -83,11 +84,13 @@ describe('Wig', function(){
       assert(fs.existsSync(pagefile),'page-as-file.html should generated via data/page-as-file.json');
       assert(fs.existsSync(deep),'dir/deep-page.html should generated via data/__init.json');
       assert(fs.existsSync(quiteDeep),'dir/dir2/quite-deep-page.html should generated via data/__init__.json');
+      assert(fs.existsSync(js),'js/index.html should generated via data/js/index.js');
 
       //content
       var indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
       var subContents = fs.readFileSync(sub,{encoding:'utf8'}).split("\n");
       var quiteDeepContents = fs.readFileSync(quiteDeep,{encoding:'utf8'}).split("\n");
+      var jsContents = fs.readFileSync(js,{encoding:'utf8'}).split("\n");
 
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
@@ -96,6 +99,10 @@ describe('Wig', function(){
 
       //template finder
       assert.equal(quiteDeepContents[2],'base in dir','dir/dir2/quite-deep-page.html should use dir.html');
+
+      //js loading
+      assert.equal(jsContents[1],'js','js/index.html should rendered with params in data/js/__init__.json');
+      assert.equal(jsContents[0],'js','js/index.html should rendered with params in data/js/index.json');
 
 
 
