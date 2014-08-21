@@ -12,6 +12,10 @@
       "title":"php",
       "_ext":"php"
     },
+    "sjis":{
+      "title":"シフトJISの日本語",
+      "_encoding":"SHIFT_JIS"
+    },
     "dir":{
       "_contents":{
         "dir2":{

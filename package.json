@@ -21,7 +21,8 @@
   "dependencies": {
     "swig": "^1.3.2",
     "commander": "^2.2.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "iconv": "^2.1.4"
   },
   "devDependencies": {
     "rimraf": "^2.2.8"
