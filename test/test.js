@@ -19,6 +19,7 @@ describe('Constructor', function(){
       assert.equal(w.options.tmplDir,'./templates');
       assert.equal(w.options.outDir,'./dist');
       assert.equal(w.options.verbose,false);
+      assert.equal(typeof(w.options.vars),'object');
       assert.equal(w.options.renderer,'swig');
     });
     it('should override default values', function(){
@@ -27,13 +28,15 @@ describe('Constructor', function(){
         dataDir: './data2',
         tmplDir: './templates2',
         outDir: './dist2',
-        verbose: true
+        verbose: true,
+        vars: {'initial':'initial var'}
         //renderer: 'handlebars',//renderer not implemented
       });
       assert.equal(w.options.dataDir, './data2');
       assert.equal(w.options.tmplDir, './templates2');
       assert.equal(w.options.outDir,'./dist2');
       assert.equal(w.options.verbose,true);
+      assert.equal(w.options.vars.initial,'initial var');
       //assert.equal('handlebars', w.options.renderer);
     });
   });
@@ -50,7 +53,8 @@ describe('Wig', function(){
       dataDir: data,
       tmplDir: template,
       outDir: dist,
-      verbose: false
+      verbose: false,
+      vars: {'initial':'initial var'}
     }
     if(fs.existsSync(dist)){
       rimraf.sync(dist);
@@ -104,7 +108,7 @@ describe('Wig', function(){
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
       assert.equal(quiteDeepContents[0],'quite deep page','data properly setted in dir/dir2/quite-deep-page.html');
-      assert.equal(quiteDeepContents[6],'this is text','data properly inherited in dir/dir2/quite-deep-page.html');
+      assert.equal(quiteDeepContents[7],'this is text','data properly inherited in dir/dir2/quite-deep-page.html');
 
       //utility params
       assert.equal(indexContents[5],'.','_rel_root parameter in dist/index.html shoud be "."');
@@ -130,6 +134,13 @@ describe('Wig', function(){
       var expected = iconv.convert('シフトJISの日本語');
       assert(bufferEqual(expected, sjisContents.slice(0,expected.length)),'dist/sjis.html should be SHIFT_JIS encoding because _encoding param in __init__.json is setted to "SHIFT_JIS"');
 
+      //parameters assigned with constructor,build()
+      assert.equal(indexContents[6],'initial var','parameter assigned with constructor should be used');
+
+      w.build({vars:{'initial':'assigned on build'}});
+      indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
+
+      assert.equal(indexContents[6],'assigned on build','parameter assigned with build() shoud be used');
 
 
     });
