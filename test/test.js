@@ -80,6 +80,7 @@ describe('Wig', function(){
       var deep = path.join(dist,'dir/deep-page.html');
       var quiteDeep = path.join(dist,'dir/dir2/quite-deep-page.html');
       var js = path.join(dist,'js/index.html');
+      var forced = path.join(dist,'forced-template.html');
 
       // output files
       assert(fs.existsSync(index),'index.html should generated');
@@ -90,6 +91,7 @@ describe('Wig', function(){
       assert(fs.existsSync(sjis),'sjis.html should generated via data/__init__.json');
       assert(fs.existsSync(quiteDeep),'dir/dir2/quite-deep-page.html should generated via data/__init__.json');
       assert(fs.existsSync(js),'js/index.html should generated via data/js/index.js');
+      assert(fs.existsSync(forced),'forced-template.html should generated via data/__init__.json');
 
       //content
       var indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
@@ -97,6 +99,7 @@ describe('Wig', function(){
       var deepContents = fs.readFileSync(deep,{encoding:'utf8'}).split("\n");
       var quiteDeepContents = fs.readFileSync(quiteDeep,{encoding:'utf8'}).split("\n");
       var jsContents = fs.readFileSync(js,{encoding:'utf8'}).split("\n");
+      var forcedContents = fs.readFileSync(forced,{encoding:'utf8'}).split("\n");
 
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
@@ -113,6 +116,8 @@ describe('Wig', function(){
 
       //template finder
       assert.equal(quiteDeepContents[2],'base in dir','dir/dir2/quite-deep-page.html should use dir.html');
+      //template forced
+      assert.equal(forcedContents[2],'forced','template must be forced via "_template" parameter');
 
       //js loading
       assert.equal(jsContents[1],'js','js/index.html should rendered with params in data/js/__init__.json');

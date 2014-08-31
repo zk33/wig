@@ -8,6 +8,9 @@
       "title":"sub",
       "value":"egg"
     },
+    "forced-template":{
+      "_template":"/forced/tmpl.html"
+    },
     "php":{
       "title":"php",
       "_ext":"php"
