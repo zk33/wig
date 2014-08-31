@@ -25,6 +25,7 @@
     "iconv": "^2.1.4"
   },
   "devDependencies": {
-    "rimraf": "^2.2.8"
+    "rimraf": "^2.2.8",
+    "buffer-equal": "0.0.1"
   }
 }

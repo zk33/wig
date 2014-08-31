@@ -4,6 +4,8 @@ var assert = require("assert")
   , fs = require('fs')
   , path = require('path')
   , rimraf = require('rimraf')
+  , iconv = require('iconv')
+  , bufferEqual = require('buffer-equal')
 ;
 
 var Wig = require('../');
@@ -74,15 +76,18 @@ describe('Wig', function(){
       var php = path.join(dist,'php.php');
       var sub = path.join(dist,'sub.html');
       var pagefile = path.join(dist,'page-as-file.html');
+      var sjis = path.join(dist,'sjis.html');
       var deep = path.join(dist,'dir/deep-page.html');
       var quiteDeep = path.join(dist,'dir/dir2/quite-deep-page.html');
       var js = path.join(dist,'js/index.html');
 
+      // output files
       assert(fs.existsSync(index),'index.html should generated');
       assert(fs.existsSync(php),'_ext parameter should override extension and should output php.php');
       assert(fs.existsSync(sub),'sub.html should generated');
       assert(fs.existsSync(pagefile),'page-as-file.html should generated via data/page-as-file.json');
-      assert(fs.existsSync(deep),'dir/deep-page.html should generated via data/__init.json');
+      assert(fs.existsSync(deep),'dir/deep-page.html should generated via data/__init__.json');
+      assert(fs.existsSync(sjis),'sjis.html should generated via data/__init__.json');
       assert(fs.existsSync(quiteDeep),'dir/dir2/quite-deep-page.html should generated via data/__init__.json');
       assert(fs.existsSync(js),'js/index.html should generated via data/js/index.js');
 
@@ -103,6 +108,13 @@ describe('Wig', function(){
       //js loading
       assert.equal(jsContents[1],'js','js/index.html should rendered with params in data/js/__init__.json');
       assert.equal(jsContents[0],'js','js/index.html should rendered with params in data/js/index.json');
+
+      //encoding
+      var sjisContents = fs.readFileSync(sjis);
+      var Iconv = require('iconv').Iconv;
+      var iconv = new Iconv('UTF-8','SHIFT_JIS');
+      var expected = iconv.convert('シフトJISの日本語');
+      assert(bufferEqual(expected, sjisContents.slice(0,expected.length)),'dist/sjis.html should be SHIFT_JIS encoding because _encoding param in __init__.json is setted to "SHIFT_JIS"');
 
 
 
