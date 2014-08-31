@@ -102,6 +102,10 @@ describe('Wig', function(){
       assert.equal(quiteDeepContents[0],'quite deep page','data properly setted in dir/dir2/quite-deep-page.html');
       assert.equal(quiteDeepContents[6],'this is text','data properly inherited in dir/dir2/quite-deep-page.html');
 
+      //utility params
+      assert.equal(indexContents[5],'.','_rel_root parameter in dist/index.html shoud be "."');
+      assert.equal(quiteDeepContents[5],'../..','_rel_root parameter in dist/dir/dir2/quite-deep-page.html shoud be "../.."');
+
       //template finder
       assert.equal(quiteDeepContents[2],'base in dir','dir/dir2/quite-deep-page.html should use dir.html');
 
