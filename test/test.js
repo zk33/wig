@@ -94,6 +94,7 @@ describe('Wig', function(){
       //content
       var indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
       var subContents = fs.readFileSync(sub,{encoding:'utf8'}).split("\n");
+      var deepContents = fs.readFileSync(deep,{encoding:'utf8'}).split("\n");
       var quiteDeepContents = fs.readFileSync(quiteDeep,{encoding:'utf8'}).split("\n");
       var jsContents = fs.readFileSync(js,{encoding:'utf8'}).split("\n");
 
@@ -105,6 +106,10 @@ describe('Wig', function(){
       //utility params
       assert.equal(indexContents[5],'.','_rel_root parameter in dist/index.html shoud be "."');
       assert.equal(quiteDeepContents[5],'../..','_rel_root parameter in dist/dir/dir2/quite-deep-page.html shoud be "../.."');
+
+      //directory-assigned value
+      assert.equal(deepContents[1],'dir value','param written in directory shoud be used');
+      assert.equal(quiteDeepContents[1],'dir2 value','param written in directory shoud be used');
 
       //template finder
       assert.equal(quiteDeepContents[2],'base in dir','dir/dir2/quite-deep-page.html should use dir.html');

@@ -17,8 +17,10 @@
       "_encoding":"SHIFT_JIS"
     },
     "dir":{
+      "value":"dir value",
       "_contents":{
         "dir2":{
+          "value":"dir2 value",
           "_contents":{
             "quite-deep-page":{
               "title":"quite deep page"
