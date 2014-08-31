@@ -6,6 +6,14 @@ var cli = require('commander');
 
 cli.version('0.0.1')
 
+function makeObj(str){
+  var arr = str.split(',');
+  var res = {};
+  for(var i=0,len=arr.length;i<len;i+=2){
+    res[arr[i]] = arr[i+1];
+  }
+  return res;
+}
 
 cli.command('build')
   .description('Parse JSON and build HTML')
@@ -13,7 +21,8 @@ cli.command('build')
   .option('-t, --tmpl_dir <path>', 'Swig template dirctory (default:./templates)')
   .option('-o, --out_dir <path>', 'Output dirctory (default:./dist)')
   .option('-v, --verbose', 'Display rendered files names')
-  .option('-r, --renderer <name>', 'Renderer (defalut:swig)')
+  .option('-r, --renderer <name>', 'Renderer (default:swig)')
+  .option('-a, --assign <items>', 'Assign template vars (KEY,VALUE,KEY,VALUE...)(default:"")',makeObj)
   .action(function(cmd){
 
     // setup options
@@ -26,7 +35,7 @@ cli.command('build')
     if(cmd.out_dir){ opt.outDir = cmd.out_dir; }
     if(cmd.verbose){ opt.verbose = cmd.verbose; }
     if(cmd.renderer){ opt.renderer = cmd.renderer; }
-
+    if(cmd.assign){ opt.vars = cmd.assign; }
 
     // build
     var Wig = require('../lib');
