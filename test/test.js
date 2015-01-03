@@ -29,21 +29,24 @@ describe('Constructor', function(){
         tmplDir: './templates2',
         outDir: './dist2',
         verbose: true,
-        vars: {'initial':'initial var'}
-        //renderer: 'handlebars',//renderer not implemented
+        vars: {'initial':'initial var'},
+        renderer: 'nunjucks'
       });
       assert.equal(w.options.dataDir, './data2');
       assert.equal(w.options.tmplDir, './templates2');
       assert.equal(w.options.outDir,'./dist2');
       assert.equal(w.options.verbose,true);
       assert.equal(w.options.vars.initial,'initial var');
-      //assert.equal('handlebars', w.options.renderer);
+      assert.equal('nunjucks', w.options.renderer);
     });
   });
 });
 
 
-describe('Wig', function(){
+
+['','nunjucks'].forEach(function(renderer){
+
+describe('Wig'+renderer, function(){
   var dist = path.join(__dirname, 'dist');
   var template = path.join(__dirname, 'templates');
   var data = path.join(__dirname, 'data');
@@ -55,6 +58,9 @@ describe('Wig', function(){
       outDir: dist,
       verbose: false,
       vars: {'initial':'initial var'}
+    }
+    if(renderer){
+      options.renderer = renderer;
     }
     if(fs.existsSync(dist)){
       rimraf.sync(dist);
@@ -145,4 +151,7 @@ describe('Wig', function(){
 
     });
   });
+});
+
+
 });
