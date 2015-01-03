@@ -1,6 +1,6 @@
 {
   "name": "wig",
-  "version": "0.0.1-beta",
+  "version": "0.0.1-beta2",
   "description": "Static html build tool based on Node,Swig",
   "main": "index.js",
   "scripts": {
