@@ -2,7 +2,7 @@ Wig
 ====
 
 Wig is a command line tool for building static html/text files.
-Wig combines swig template and JSON data, and builds html(or other format) files.
+Wig combines nunjucks template and JSON data, and builds html(or other format) files.
 
 
 Install
