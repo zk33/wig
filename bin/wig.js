@@ -17,11 +17,11 @@ function makeObj(str){
 
 cli.command('build')
   .description('Parse JSON and build HTML')
-  .option('-d, --data_dir <path>', 'JSON data directory (default:./data)')
-  .option('-t, --tmpl_dir <path>', 'Swig template dirctory (default:./templates)')
+  .option('-d, --data_dir <path>', 'Data directory (default:./data)')
+  .option('-t, --tmpl_dir <path>', 'Template dirctory (default:./templates)')
   .option('-o, --out_dir <path>', 'Output dirctory (default:./dist)')
   .option('-v, --verbose', 'Display rendered files names')
-  .option('-r, --renderer <name>', 'Renderer (default:swig)')
+  .option('-r, --renderer <name>', 'Renderer (default:nunjucks)')
   .option('-a, --assign <items>', 'Assign template vars (KEY,VALUE,KEY,VALUE...)(default:"")',makeObj)
   .action(function(cmd){
 
