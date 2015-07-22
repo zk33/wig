@@ -20,7 +20,7 @@ describe('Constructor', function(){
       assert.equal(w.options.outDir,'./dist');
       assert.equal(w.options.verbose,false);
       assert.equal(typeof(w.options.vars),'object');
-      assert.equal(w.options.renderer,'swig');
+      assert.equal(w.options.renderer,'nunjucks');
     });
     it('should override default values', function(){
       var w = new Wig({
@@ -44,7 +44,7 @@ describe('Constructor', function(){
 
 
 
-['','nunjucks'].forEach(function(renderer){
+['','swig'].forEach(function(renderer){
 
 describe('Wig'+renderer, function(){
   var dist = path.join(__dirname, 'dist');
@@ -80,7 +80,7 @@ describe('Wig'+renderer, function(){
     it('should load datas and create files', function(){
       var w = new Wig(options);
       w.build();
-      
+
       //pages
       var index = path.join(dist,'index.html');
       var php = path.join(dist,'php.php');
@@ -91,6 +91,8 @@ describe('Wig'+renderer, function(){
       var quiteDeep = path.join(dist,'dir/dir2/quite-deep-page.html');
       var js = path.join(dist,'js/index.html');
       var forced = path.join(dist,'forced-template.html');
+      var mdpage = path.join(dist,'markdown-page.html');
+      var ymlpage = path.join(dist,'yaml-page.html');
 
       // output files
       assert(fs.existsSync(index),'index.html should generated');
@@ -102,6 +104,8 @@ describe('Wig'+renderer, function(){
       assert(fs.existsSync(quiteDeep),'dir/dir2/quite-deep-page.html should generated via data/__init__.json');
       assert(fs.existsSync(js),'js/index.html should generated via data/js/index.js');
       assert(fs.existsSync(forced),'forced-template.html should generated via data/__init__.json');
+      assert(fs.existsSync(mdpage),'markdown-page.html should generated via markdown-page.md');
+      assert(fs.existsSync(ymlpage),'yaml-page.html should generated via yaml-page.yaml');
 
       //content
       var indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
@@ -110,6 +114,8 @@ describe('Wig'+renderer, function(){
       var quiteDeepContents = fs.readFileSync(quiteDeep,{encoding:'utf8'}).split("\n");
       var jsContents = fs.readFileSync(js,{encoding:'utf8'}).split("\n");
       var forcedContents = fs.readFileSync(forced,{encoding:'utf8'}).split("\n");
+      var mdContents = fs.readFileSync(mdpage,{encoding:'utf8'}).split("\n");
+      var ymlContents = fs.readFileSync(ymlpage,{encoding:'utf8'}).split("\n");
 
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
@@ -139,6 +145,16 @@ describe('Wig'+renderer, function(){
       var iconv = new Iconv('UTF-8','SHIFT_JIS');
       var expected = iconv.convert('シフトJISの日本語');
       assert(bufferEqual(expected, sjisContents.slice(0,expected.length)),'dist/sjis.html should be SHIFT_JIS encoding because _encoding param in __init__.json is setted to "SHIFT_JIS"');
+
+      //data from markdown
+      assert.equal(mdContents[0],'markdown','data in markdown should properly assigned');
+      assert.equal(mdContents[1],'marked','data in markdown should properly assigned');
+      assert.equal(mdContents.indexOf('<h1 id="hello-wig">hello, wig</h1>') > -1, true,'markdown text should properly parsed in _html value');
+
+      //data from yaml file
+      assert.equal(ymlContents[0],'yaml','data in yaml file should properly assigned');
+      assert.equal(ymlContents[1],'yamlpage','data in yaml file should properly assigned');
+      assert.equal(indexContents[9],'yamldata','data in underscored yaml file should properly assigend')
 
       //parameters assigned with constructor,build()
       assert.equal(indexContents[6],'initial var','parameter assigned with constructor should be used');
