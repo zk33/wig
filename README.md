@@ -36,7 +36,7 @@ Data(JSON) file structure
 
 ```
 data/
-    __init__.json           : Loaded first. You can define global params of this directory and pages of this directory. 
+    __init__.json           : Loaded first. You can define global params of this directory and pages of this directory.
     _paramname.json         : Used as global parameter named as "paramname"
     pagename.json           : Renderd as /pagename.html or definition for html files of /pagename/ directory (if has "_content" parameter in file)
     pagename_paramname.json : Used as parameter of /pagename.html
@@ -71,7 +71,7 @@ All parameter (except "_contents") automatically inherited from parent directory
 Rule of finding template
 ------------
 
-Templates automatically assigned based on output file path. 
+Templates automatically assigned based on output file path.
 
 ### Basic Rule
 
