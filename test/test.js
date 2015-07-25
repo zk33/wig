@@ -44,7 +44,7 @@ describe('Constructor', function(){
 
 
 
-['','swig'].forEach(function(renderer){
+['','multiDir','swig'].forEach(function(renderer){
 
 describe('Wig'+renderer, function(){
   var dist = path.join(__dirname, 'dist');
@@ -61,6 +61,10 @@ describe('Wig'+renderer, function(){
     }
     if(renderer){
       options.renderer = renderer;
+      if(renderer === 'multiDir'){
+        options.renderer = 'nunjucks';
+        options.tmplDir = ['tmpl', template];
+      }
     }
     if(fs.existsSync(dist)){
       rimraf.sync(dist);
