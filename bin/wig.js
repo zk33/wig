@@ -4,7 +4,7 @@
 
 var cli = require('commander');
 
-cli.version('0.1.1')
+cli.version('0.1.2')
 
 function makeObj(str){
   var arr = str.split(',');

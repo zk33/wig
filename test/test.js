@@ -131,7 +131,7 @@ describe('Wig'+renderer, function(){
 
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
-      assert.equal(quiteDeepContents[0],'quite deep page','data properly setted in dir/dir2/quite-deep-page.html');
+      assert.equal(quiteDeepContents[0],'quite deep page&lt;test&gt;','data properly setted in dir/dir2/quite-deep-page.html');
       assert.equal(quiteDeepContents[7],'this is text','data properly inherited in dir/dir2/quite-deep-page.html');
 
       //utility params
