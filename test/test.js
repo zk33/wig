@@ -83,6 +83,8 @@ describe('Wig'+renderer, function(){
     });
     it('should load datas and create files', function(){
       var w = new Wig(options);
+      //add filter
+      w.addRendererFilter('date', require('nunjucks-date-filter'));
       w.build();
 
       //pages
@@ -97,6 +99,8 @@ describe('Wig'+renderer, function(){
       var forced = path.join(dist,'forced-template.html');
       var mdpage = path.join(dist,'markdown-page.html');
       var ymlpage = path.join(dist,'yaml-page.html');
+      var updated = path.join(dist,'updated.html');
+      var created = path.join(dist,'created.html');
 
       // output files
       assert(fs.existsSync(index),'index.html should generated');
@@ -110,6 +114,8 @@ describe('Wig'+renderer, function(){
       assert(fs.existsSync(forced),'forced-template.html should generated via data/__init__.json');
       assert(fs.existsSync(mdpage),'markdown-page.html should generated via markdown-page.md');
       assert(fs.existsSync(ymlpage),'yaml-page.html should generated via yaml-page.yaml');
+      assert(fs.existsSync(updated),'updated.html should generated via updated.yaml');
+      assert(fs.existsSync(created),'created.html should generated via created.yaml');
 
       //content
       var indexContents = fs.readFileSync(index,{encoding:'utf8'}).split("\n");
@@ -120,6 +126,8 @@ describe('Wig'+renderer, function(){
       var forcedContents = fs.readFileSync(forced,{encoding:'utf8'}).split("\n");
       var mdContents = fs.readFileSync(mdpage,{encoding:'utf8'}).split("\n");
       var ymlContents = fs.readFileSync(ymlpage,{encoding:'utf8'}).split("\n");
+      var updatedContents = fs.readFileSync(updated,{encoding:'utf8'}).split("\n");
+      var createdContents = fs.readFileSync(created,{encoding:'utf8'}).split("\n");
 
       //data inheritance
       assert.equal(indexContents[0],'index','data properly setted in index.html');
@@ -159,6 +167,13 @@ describe('Wig'+renderer, function(){
       assert.equal(ymlContents[0],'yaml','data in yaml file should properly assigned');
       assert.equal(ymlContents[1],'yamlpage','data in yaml file should properly assigned');
       assert.equal(indexContents[9],'yamldata','data in underscored yaml file should properly assigend')
+
+      //addRendererFilter, _pages sorted by _updated,_created
+      assert.equal(updatedContents[11],'2015-06-30','added date filter by addRendererFilter');
+      assert.equal(updatedContents[12],'07/26/2015','added date filter by addRendererFilter');
+      assert.equal(updatedContents[13],'updated','page list properly generated and sorted');
+      assert.equal(updatedContents[14],'created','page list properly generated and sorted');
+
 
       //parameters assigned with constructor,build()
       assert.equal(indexContents[6],'initial var','parameter assigned with constructor should be used');

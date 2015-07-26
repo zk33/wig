@@ -8,3 +8,7 @@
 {{textdata}}
 {{yaml.data}}
 {{_html|safe}}
+{{ _created | date("YYYY-MM-DD")}}
+{{ _updated | date("L")}}
+{% for page in _pages %}{{ page.params.title }}
+{% endfor %}

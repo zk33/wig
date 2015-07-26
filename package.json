@@ -29,7 +29,8 @@
     "swig": "^1.4.2"
   },
   "devDependencies": {
-    "rimraf": "^2.4.2",
-    "buffer-equal": "0.0.1"
+    "buffer-equal": "0.0.1",
+    "nunjucks-date-filter": "^0.1.1",
+    "rimraf": "^2.4.2"
   }
 }
