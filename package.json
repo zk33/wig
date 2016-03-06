@@ -1,6 +1,6 @@
 {
   "name": "wig",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Static html build tool based on jinja2-like templates(nunjucks or swig)",
   "main": "index.js",
   "scripts": {
