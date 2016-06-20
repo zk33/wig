@@ -17,7 +17,7 @@
     },
     "sjis":{
       "title":"シフトJISの日本語",
-      "_encoding":"SHIFT_JIS"
+      "_encoding":"Shift_JIS"
     },
     "dir":{
       "value":"dir value",
