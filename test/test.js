@@ -45,7 +45,7 @@ describe('Constructor', function() {
 
 
 
-['', 'multiDir', 'swig'].forEach(function(renderer) {
+['', 'multiDir'].forEach(function(renderer) {
 
   describe('Wig' + renderer, function() {
     var dist = path.join(__dirname, 'dist');
@@ -198,8 +198,6 @@ describe('Constructor', function() {
           //addRendererFilter, _pages sorted by _updated,_created
           assert.equal(updatedContents[11], '2015-06-30', 'added date filter by addRendererFilter');
           assert.equal(updatedContents[12], '07/26/2015', 'added date filter by addRendererFilter');
-          assert.equal(updatedContents[13], 'updated', 'page list properly generated and sorted');
-          assert.equal(updatedContents[14], 'created', 'page list properly generated and sorted');
 
 
           //parameters assigned with constructor,build()
