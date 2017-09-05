@@ -214,9 +214,9 @@ describe('Constructor', function() {
             }).split("\n");
             assert.equal(indexContents[6], 'assigned on build', 'parameter assigned with build() shoud be used');
             done();
-          }, 500);
+          }, 1000);
 
-        }, 500);
+        }, 1000);
       });
     });
   });
