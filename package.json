@@ -1,6 +1,6 @@
 {
   "name": "wig",
-  "version": "0.1.10",
+  "version": "1.0.0",
   "description": "Static html build tool based on Nunjucks",
   "main": "index.js",
   "scripts": {
