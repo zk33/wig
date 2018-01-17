@@ -19,21 +19,21 @@
   "author": "Takaaki Yamazaki (zk33)",
   "license": "MIT",
   "dependencies": {
-    "chokidar": "^1.7.0",
-    "commander": "^2.8.1",
+    "chokidar": "^2.0.0",
+    "commander": "^2.13.0",
     "highlight.js": "^9.7.0",
-    "iconv-lite": "^0.4.13",
-    "js-yaml": "^3.3.1",
+    "iconv-lite": "^0.4.19",
+    "js-yaml": "^3.10.0",
     "lodash": "^4.16.4",
-    "marked": "^0.3.3",
+    "marked": "^0.3.12",
     "mkdirp": "^0.5.1",
     "nunjucks": "^3.0.0",
-    "object-hash": "^1.1.2"
+    "object-hash": "^1.2.0"
   },
   "devDependencies": {
     "buffer-equal": "1.0.0",
     "iconv": "^2.2.1",
     "nunjucks-date-filter": "^0.1.1",
-    "rimraf": "^2.4.2"
+    "rimraf": "^2.6.2"
   }
 }
