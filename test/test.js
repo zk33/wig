@@ -88,7 +88,10 @@ describe('Constructor', function() {
         this.timeout(3000);
         var w = new Wig(options);
         //add filter
-        w.addRendererFilter('date', require('nunjucks-date-filter'));
+        w.addRendererFilter('date', function(date,postfix){
+          var d = new Date(Date.parse(date));
+          return d.toDateString() + postfix;
+        });
         w.build();
 
         setTimeout(function() {
@@ -196,8 +199,8 @@ describe('Constructor', function() {
           assert.equal(indexContents[9], 'yamldata', 'data in underscored yaml file should properly assigend')
 
           //addRendererFilter, _pages sorted by _updated,_created
-          assert.equal(updatedContents[11], '2015-06-30', 'added date filter by addRendererFilter');
-          assert.equal(updatedContents[12], '07/26/2015', 'added date filter by addRendererFilter');
+          assert.equal(updatedContents[11], 'Tue Jun 30 2015!', 'added date filter by addRendererFilter');
+          assert.equal(updatedContents[12], 'Sun Jul 26 2015?', 'added date filter by addRendererFilter');
 
 
           //parameters assigned with constructor,build()
