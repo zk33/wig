@@ -10,11 +10,11 @@ var options = actless.options;
 // ==================================
 
 // sass compile options ======================
-//options.sass.destDir = 'public/assets/css';
+options.sass.destDir = '../docs/assets/css';
 //options.sass.style = 'compact';
 //options.sass.cssnext.options.xxx = 'xxx';
-//options.sass.mqpacker.enabled = true;
-//options.sass.cssnano.enabled = true;
+options.sass.mqpacker.enabled = true;
+options.sass.cssnano.enabled = true;
 
 // js compile options ========================
 //options.js.srcDir = 'assets/js';
@@ -36,7 +36,7 @@ var options = actless.options;
 //options.icon.className = 'icon';
 
 // wig(HTML builder) compile options ================
-//options.wig.publicDir = 'public';
+options.wig.publicDir = '../docs';
 //options.wig.dataDir = 'data';
 //options.wig.tmplDir = 'templates';
 //options.wig.verbose = true;
@@ -44,7 +44,7 @@ var options = actless.options;
 // test server options ===================
 //options.server.type = 'node' // 'node' || 'python' || 'php' || 'gae' || 'none'
 //options.server.livereload = true;
-//options.server.rootDir = 'public';
+options.server.rootDir = '../docs';
 //options.server.gaeAppRoot = 'app'; // for app engine only
 /*
 options.server.url = {
@@ -55,8 +55,8 @@ options.server.url = {
 */
 
 // HTML prettify options =================
-//options.prettify.enabled = true;
-//options.prettify.tmpDir = 'tmp_html';
+options.prettify.enabled = true;
+options.prettify.tmpDir = 'tmp_html';
 /*
 options.prettify.options = {
   indent_size: 2,
@@ -64,7 +64,7 @@ options.prettify.options = {
 */
 
 // generate assetHash for cache busterring ===========
-//options.assetHash.enabled = true;
+options.assetHash.enabled = true;
 //options.assetHash.destDir = '';
 //options.assetHash.extraAssetDir = [];
 
