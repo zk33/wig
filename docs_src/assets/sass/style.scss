@@ -1,0 +1,50 @@
+//=======================================================
+// Uncomment CSS libraries you wanna use:-)
+//=======================================================
+
+// =======================================================
+// sanitize.css
+// https://github.com/10up/sanitize.css
+
+//@import 'sanitize';
+
+// =======================================================
+// bootstrap-sass
+// https://github.com/twbs/bootstrap-sass
+
+// customize:
+// hit command on project root directory:
+// cp ./node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss ./assets/sass/_bootstrap_vars.scss
+// and comment out below line
+//@import './bootstrap_vars';
+
+//@import 'bootstrap';
+
+// =======================================================
+// material design lite
+// https://github.com/google/material-design-lite
+
+// customize:
+// hit command on project root directory:
+// cp ./node_modules/material-design-lite/src/_variables.scss ./assets/sass/_mdl_vars.scss
+// and comment out below line
+//@import './mdl_vars';
+
+//@import 'material-design-lite';
+
+//@import 'material-design-lite-grid'; // *grid only
+
+//=======================================================
+// actless
+//=======================================================
+// if you build icon font with actless, uncomment below lines.
+//
+// @import './_iconhash.scss';
+// @import './_icon.scss';
+//
+
+// =======================================================
+// AND write your awesome CSS!
+// =======================================================
+
+@import './vars';
