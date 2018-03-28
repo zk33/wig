@@ -19,7 +19,7 @@ Setup directories like:
 ```
 project_dir/
     data/   : JSON data directory
-    dist/   : Output directory
+    public/   : Output directory
     templates/      :Swig Template directory
 ```
 

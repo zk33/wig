@@ -19,7 +19,8 @@ cli.command('build')
   .description('Parse JSON and build HTML')
   .option('-d, --data_dir <path>', 'Data directory (default:./data)')
   .option('-t, --tmpl_dir <path>', 'Template dirctory (default:./templates)')
-  .option('-o, --out_dir <path>', 'Output dirctory (default:./dist)')
+  .option('-p, --public_dir <path>', 'Output dirctory (default:./public)')
+  .option('-o, --out_dir <path>', 'Output dirctory (deprecated. use -p)')
   .option('-v, --verbose', 'Display rendered files names')
   .option('-r, --renderer <name>', 'Renderer (default:nunjucks)')
   .option('-a, --assign <items>', 'Assign template vars (KEY,VALUE,KEY,VALUE...)(default:"")', makeObj)
@@ -38,6 +39,9 @@ cli.command('build')
     }
     if (cmd.out_dir) {
       opt.outDir = cmd.out_dir;
+    }
+    if (cmd.public_dir) {
+      opt.publicDir = cmd.public_dir;
     }
     if (cmd.verbose) {
       opt.verbose = cmd.verbose;
