@@ -1,19 +1,100 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="">
   <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Document</title>
     <link rel="stylesheet" href="./assets/css/style.css"> </head>
   <body>
-    <header> </header>
+    <header>
+      <h1 class="header-h">
+    </header>
     <main>
       <!---
 #_created: 2015-08-01
 #_updated: 2015-08-01
 #author: your name
 --->
-      <h1 id="hello-world-">Hello, world!</h1>
-      <p>Write markdown here.</p>
+      <h1 id="what-is-wig-">What is wig?</h1>
+      <p>wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。 継承というコンセプトを活用し、できるだけ「コピペ」をする事なく、DRYに静的サイトを構築することができます。</p>
+      <h1 id="-">コンセプト</h1>
+      <p>wigのコンセプトは「DRY」です。</p>
+      <p>Webサイトを作っている時に、こんなこともまれによくあります。</p>
+      <ul>
+        <li>グローバルナビゲーションに修正が入って、全ページを書き換えないといけなくなった</li>
+        <li>大量にある同じレイアウトのページでレイアウト変更が入って、全部書き換えないといけなくなった</li>
+      </ul>
+      <p>そんな時、わざわざ全てのページを開いて、HTMLを書き換えるのは、手間もかかりますしミスも多くなります。 そんな苦労から一切おさらばし、より安全確実に、スピーディにWebサイトを更新し続けられるようにと作られたのがwigです。</p>
+      <p>wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。</p>
+      <h2 id="-">もう少し詳しく</h2>
+      <p>Webページは、「データ」と「テンプレート」に分解することができます。</p>
+      <p>wigでは、この「データ」と「テンプレート」を作ることで、サイトを構築していきます。</p>
+      <p>Webサイトは、大抵はディレクトリ構造を持っています。 同じディレクトリ内にあるページは、同じようなデータとテンプレートで表示される事が多いはずです。 なので、データは階層構造を持ち、親階層で定義されたデータを、子階層で継承、オーバーライド（上書き）できます。</p>
+      <p>テンプレートは、nunjucksの力によって、テンプレートを継承したり、macroやincludeを活用するなどして、効率的に書く事ができます。</p>
+      <h1 id="quick-start">Quick-start</h1>
+      <p>wigをインストールします。</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
+</code></pre>
+      <p>ディレクトリを作ります</p> <pre><code>
+</code></pre>
+      <p>ビルドコマンドを叩きます</p> <pre><code><span class="hljs-attribute">wig build</span>
+</code></pre>
+      <p>もしくは、gulpなどのタスクランナーで、ビルドコマンドを走らせます。</p>
+      <p>最小限のセットアップ（gulpを使う場合）は、
+        <a href="#">リポジトリ</a>に例があります。 CSSなどを含めたセットアップは、
+        <a href="https://github.com/zk33/actless">actless</a>を使うと便利です。</p>
+      <h1 id="setup-data">Setup data</h1>
+      <p>データには、２つの役割があります。</p>
+      <ul>
+        <li>どの階層に、どういう名前のページを出力するかを定義する</li>
+        <li>ページ内に出力する内容/パラメータを定義する</li>
+      </ul>
+      <h2 id="-">ページ定義</h2>
+      <p>ページの定義は、２つの方法があります。</p>
+      <h3 id="-">出力したいファイルと同名のファイルを置く</h3>
+      <p><code>data</code>ディレクトリ内に <code>data/index.text</code> <code>data/index.md</code> などのファイルを置いてビルドすると、 <code>public</code>ディレクトリに <code>public/index.html</code> が出力されます。</p>
+      <p>
+        <strong>ファイル名は、<code>_</code>（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）</strong>
+      </p>
+      <h3 id="_contents-"><code>_contents</code>パラメータを使う</h3>
+      <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>というパラメータを設定すると、それに基づいてページが出力されます。</p> <pre><code>{
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"indexページ"</span>
+    },
+    <span class="hljs-attr">"profile"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"プロフィール"</span>
+    },
+    <span class="hljs-attr">"works"</span>:{
+      <span class="hljs-attr">"_contents"</span>:{
+        <span class="hljs-attr">"work1"</span>:{
+          <span class="hljs-attr">"title"</span>:<span class="hljs-string">"作品1"</span>
+        },
+        <span class="hljs-attr">"work2"</span>:{
+          <span class="hljs-attr">"title"</span>:<span class="hljs-string">"作品2"</span>
+        }
+      }
+    }
+    <span class="hljs-string">"contact"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"お問い合わせ"</span>
+    }
+  }
+}
+
+</code></pre>
+      <p>その際、<code>_contents</code>が定義されているファイル名がディレクトリになります。 もし↑の内容が<code>data/hello,json</code>に書かれていた場合は、<code>public/hello/index.html</code>や<code>public/hello/profile.html</code>が出力されます。 ディレクトリを作りたくない場合は、<code>__init__.json</code>というファイルに書いてください。</p>
+      <h2 id="-">パラメータの定義</h2>
+      <p>テンプレートに渡すパラメータを定義することができます。</p>
+      <h3 id="-">ファイル内で定義する</h3>
+      <h3 id="-">ファイルで定義する</h3>
+      <h3 id="-">継承の仕組み</h3>
+      <h3 id="-">特殊パラメータ</h3>
+      <p><code>_ext</code> ファイルを出力する時に、拡張子を指定したものに変更することができます。</p>
+      <h1 id="templating">Templating</h1>
+      <p>wigは、テンプレートエンジンとしてnunjucksを採用しています。 nunjucksは、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。</p>
+      <p>テンプレートの詳細は、nunjucksのドキュメントをご覧ください。 nunjucks以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。</p>
+      <h2 id="wig-">wigの特殊テンプレート変数</h2>
+      <p><code>data</code>ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。</p>
+      <p><code>_rel_root</code> <code>public</code>のルートディレクトリまでの相対パスを出力します。 サイト内のリンクを相対パスで書きたい場合などに便利です。</p>
+      <h1 id="api">API</h1>
     </main>
     <footer> </footer>
     <script src="./assets/js/main.js"></script>
