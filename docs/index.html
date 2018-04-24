@@ -88,10 +88,39 @@
       <h3 id="-">継承の仕組み</h3>
       <h3 id="-">特殊パラメータ</h3>
       <p><code>_ext</code> ファイルを出力する時に、拡張子を指定したものに変更することができます。</p>
+      <p><code>_template</code> テンプレートのファイル名を指定します</p>
       <h1 id="templating">Templating</h1>
       <p>wigは、テンプレートエンジンとしてnunjucksを採用しています。 nunjucksは、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。</p>
       <p>テンプレートの詳細は、nunjucksのドキュメントをご覧ください。 nunjucks以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。</p>
-      <h2 id="wig-">wigの特殊テンプレート変数</h2>
+      <h2 id="-">テンプレートの決定の仕組み</h2>
+      <p>ファイルを出力する際、<code>template</code>フォルダ内のどのテンプレートを使ってレンダリングするかは、<code>data</code>で決められたファイル名を元にして、自動的に決まる仕組みになっています。</p>
+      <h3 id="-">テンプレートのルール</h3>
+      <ol>
+        <li>出力ファイルと完全に同じディレクトリ/ファイル名のテンプレートを探します /foo/bar.html -&gt; /foo/bar.html</li>
+        <li>ディレクトリの区切りをアンダースコアに置換したものを探します /foo/bar.html -&gt; foo_bar.html</li>
+        <li>ディレクトリ内に<code>__base__.html</code>があれば、それを使います /foo/bar.html -&gt; foo/__base__.html</li>
+        <li>1階層上に上がって、同じことを繰り返します。</li>
+      </ol>
+      <p>たとえば、出力するファイルが、<code>/spam/egg/ham.php</code>の場合、</p> <pre><code>/spam/egg/ham<span class="hljs-selector-class">.php</span>
+/spam/egg/ham<span class="hljs-selector-class">.html</span>
+/spam_egg_ham<span class="hljs-selector-class">.php</span>
+/spam_egg_ham<span class="hljs-selector-class">.html</span>
+/spam/egg/__base__<span class="hljs-selector-class">.php</span>
+/spam/egg/__base__<span class="hljs-selector-class">.html</span>
+/spam/egg<span class="hljs-selector-class">.php</span>
+/spam/egg<span class="hljs-selector-class">.html</span>
+/spam_egg<span class="hljs-selector-class">.php</span>
+/spam_egg<span class="hljs-selector-class">.html</span>
+/spam/__base__<span class="hljs-selector-class">.php</span>
+/spam/__base__<span class="hljs-selector-class">.html</span>
+/spam<span class="hljs-selector-class">.php</span>
+/spam<span class="hljs-selector-class">.html</span>
+/__base__<span class="hljs-selector-class">.php</span>
+/__base__.html
+</code></pre>
+      <p>これを上から順に探して、見つかったテンプレートを使います。</p>
+      <p>このルールから外れたテンプレートを使いたい場合は、dataで該当するファイル/ディレクトリのところに<code>_template</code>変数で指定してください。</p>
+      <h2 id="-">自動出力されるテンプレート変数</h2>
       <p><code>data</code>ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。</p>
       <p><code>_rel_root</code> <code>public</code>のルートディレクトリまでの相対パスを出力します。 サイト内のリンクを相対パスで書きたい場合などに便利です。</p>
       <h1 id="api">API</h1>

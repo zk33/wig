@@ -135,6 +135,8 @@ CSSなどを含めたセットアップは、[actless](https://github.com/zk33/a
 `_ext`
 ファイルを出力する時に、拡張子を指定したものに変更することができます。
 
+`_template`
+テンプレートのファイル名を指定します
 
 # Templating
 
@@ -144,7 +146,45 @@ nunjucksは、jinja2をベースにしたテンプレートエンジンで、継
 テンプレートの詳細は、nunjucksのドキュメントをご覧ください。
 nunjucks以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。
 
-## wigの特殊テンプレート変数
+## テンプレートの決定の仕組み
+
+ファイルを出力する際、`template`フォルダ内のどのテンプレートを使ってレンダリングするかは、`data`で決められたファイル名を元にして、自動的に決まる仕組みになっています。
+
+### テンプレートのルール
+
+1. 出力ファイルと完全に同じディレクトリ/ファイル名のテンプレートを探します /foo/bar.html -> /foo/bar.html
+2. ディレクトリの区切りをアンダースコアに置換したものを探します /foo/bar.html -> foo\_bar.html
+3. ディレクトリ内に`__base__.html`があれば、それを使います /foo/bar.html -> foo/\_\_base\_\_.html
+4. 1階層上に上がって、同じことを繰り返します。
+
+たとえば、出力するファイルが、`/spam/egg/ham.php`の場合、
+
+```
+/spam/egg/ham.php
+/spam/egg/ham.html
+/spam_egg_ham.php
+/spam_egg_ham.html
+/spam/egg/__base__.php
+/spam/egg/__base__.html
+/spam/egg.php
+/spam/egg.html
+/spam_egg.php
+/spam_egg.html
+/spam/__base__.php
+/spam/__base__.html
+/spam.php
+/spam.html
+/__base__.php
+/__base__.html
+```
+
+これを上から順に探して、見つかったテンプレートを使います。
+
+このルールから外れたテンプレートを使いたい場合は、dataで該当するファイル/ディレクトリのところに`_template`変数で指定してください。
+
+
+
+## 自動出力されるテンプレート変数
 
 `data`ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。
 
