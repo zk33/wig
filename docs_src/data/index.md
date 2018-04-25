@@ -22,7 +22,7 @@ JSON等で定義されたデータと、テンプレートを結合し、静的�
     </div>
   </div>
   <div class="main-chart-command">
-    <p><code>wig build / Wig.build()</code></p>
+    <p><code>wig build / wig.build()</code></p>
   </div>
   <div class="main-chart-result">
     <h2>static web site/document<h2>
@@ -45,60 +45,119 @@ Webサイトを作っている時に、まれによくある
 wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。
 
 
-# Quick-start
+# Getting started
 
+## 1.ディレクトリの準備
 
-wigをインストールします。
+プロジェクトのルートディレクトリに、３つのディレクトリを準備します。
+
+```text
+/data ・・ データを格納します
+/templates ・・ テンプレートを格納します
+/public ・・ ビルドした静的ファイルが出力されます
+```
+※ 各ディレクトリはオプションで指定できます
+
+## 2-1.コマンドラインでビルドする
+
+wigをインストールします
 
 ```
-npm install wig
+npm install -g wig
 ```
 
-ディレクトリを作ります
-
-```
-```
-
-ビルドコマンドを叩きます
+データとテンプレートを用意したら、ビルドコマンドを走らせます。
 
 ```
 wig build
 ```
 
-もしくは、gulpなどのタスクランナーで、ビルドコマンドを走らせます。
 
-最小限のセットアップ（gulpを使う場合）は、[リポジトリ](#)に例があります。
-CSSなどを含めたセットアップは、[actless](https://github.com/zk33/actless)を使うと便利です。
+## 2-2.タスクランナーでビルドする
 
+wigをインストールします
+
+```
+npm install wig
+```
+
+gulpfile.jsにタスクを用意します。
+
+```
+let Wig = require('wig');
+let builder;
+let opt = {
+  dataDir:"./data", // dataを格納するディレクトリ
+  publicDir:"./public", // 出力（＝公開）ディレクトリ
+  tmplDir:"./templates" // テンプレートを格納するディレクトリ
+}
+
+gulp.task('wig', function() {
+  if (!builder) {
+    builder = new Wig(opt);
+  }
+  try {
+    builder.build();
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+let watchSrc = [
+  path.join(rootPath, opt.dataDir, '**', '*'),
+  path.join(rootPath, opt.tmplDir, '**', '*')
+]
+
+gulp.task('wig:watch', function() {
+  watch(watchSrc, function() {
+    gulp.start('actless:wig');
+  });
+});
+
+gulp.task('default',['wig','wig:watch']);
+```
+
+gulpを走らせます
+
+```
+gulp
+```
+
+----
+
+※最小限のセットアップ（gulpを使う場合）は、[サンプル](#)に例があります。  
+CSSなどを含めたセットアップは、[actless](https://github.com/zk33/actless)を使うと便利です。  
+このドキュメントもwigで作られていますので、参考にしてください！
 
 # Setup data
 
-データには、２つの役割があります。
+`/data`ディレクトリ内のデータには、２つの役割があります。
 
-* どの階層に、どういう名前のページを出力するかを定義する
-* ページ内に出力する内容/パラメータを定義する
+1. **どの階層に、どういう名前でページを出力するかを決める**
+2. **各ページで使う変数を定義する**
 
-## ページ定義
+## 1. 出力するページを指定する
 
-ページの定義は、２つの方法があります。
+出力するページの指定には、２つの方法があります。
 
-### 出力したいファイルと同名のファイルを置く
+### 1-1. 出力したいファイルと同名のファイルを置く
 
-`data`ディレクトリ内に
-`data/index.text`
-`data/index.md`
-などのファイルを置いてビルドすると、
-`public`ディレクトリに
-`public/index.html`
-が出力されます。
+`data`ディレクトリ内に、`data/index.txt`、`data/index.md`などのファイルを置いてビルドすると、
+`public`ディレクトリに、`public/index.html`が出力されます。
 
-**ファイル名は、`_`（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）**
+Markdownファイル（`.md`）を中心にサイトを作っていくような場合にはこちらの方法を使うと便利です。
 
-### `_contents`パラメータを使う
+※この場合のファイル名は、`_`（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）
 
-`data`ディレクトリ内に置いたJSONファイル（またはJSファイル）で、`_contents`というパラメータを設定すると、それに基づいてページが出力されます。
+### 1-2.`_contents`パラメータを使う
 
-```
+`data`ディレクトリ内に置いたJSONファイル（またはJSファイル）で、`_contents`というパラメータを設定すると、それに基づいてページが出力されます。  
+その際、`_contents`が定義されているファイルの名前がディレクトリ名になります。
+もし、ファイル名をディレクトリ名として使わない場合は、`__init__.json`というファイルに`_contents`パラメータを定義してください。
+
+たとえば、以下の内容を、
+
+```json
 {
   "_contents":{
     "index":{
@@ -125,32 +184,78 @@ CSSなどを含めたセットアップは、[actless](https://github.com/zk33/a
 
 ```
 
-その際、`_contents`が定義されているファイル名がディレクトリになります。
-もし↑の内容が`data/hello,json`に書かれていた場合は、`public/hello/index.html`や`public/hello/profile.html`が出力されます。
-ディレクトリを作りたくない場合は、`__init__.json`というファイルに書いてください。
+`data/hello.json`に書いた場合は、`public`ディレクトリに
 
-## パラメータの定義
+```
+hello/index.html
+hello/profile.html
+hello/works/work1.html
+hello/works/work2.html
+hello/contact.html
+```
 
-テンプレートに渡すパラメータを定義することができます。
+が出力されます。  
+`data/__init__.json`に書いた場合は
 
-### ファイル内で定義する
-### ファイルで定義する
-### 継承の仕組み
-### 特殊パラメータ
+```
+index.html
+profile.html
+works/work1.html
+works/work2.html
+contact.html
+```
 
-`_ext`
-ファイルを出力する時に、拡張子を指定したものに変更することができます。
+が出力されます。
 
-`_template`
-テンプレートのファイル名を指定します
+## 2.パラメータの定義
+
+`data`ディレクトリのJSONファイルで、テンプレートに渡す変数を定義することができます。
+たとえば、ページのタイトルやdescriptionをdataページで決めたり、ページの処理を分岐させるためにIDを渡すなど、様々に活用できます。
+
+### 2-1. ファイルで定義する
+
+アンダースコア（`_`）を最初につけたファイルは、パラメータとして扱われます。
+
+たとえば、`data/_hello.txt`の中身は、「hello」という名前でテンプレートに渡されます。
+
+アンダースコア（`_`）を最初につけたファイルが、JSONなどの複数パラメータを設定できるファイルの場合、ファイル名を変数名とした`Object`になります。
+
+`data/_hello.json`の中身が
+
+```
+{
+  "world":"yay!"
+}
+```
+の場合、テンプレート上では
+
+```
+{{ hello.world }}
+```
+
+で表示させることができます。
+
+### 2-2. JSONやyamlなどのファイルで複数のパラメータを定義する
+
+
+
+## 3. パラメータの継承
+
+親階層で定義したパラメータは、子階層で使うことができます。
+
+
+## 4. 特殊パラメータ
+
+* `_ext`：ファイルを出力する時に、拡張子を指定したものに変更することができます。
+* `_template`：テンプレートのファイル名を指定します。
 
 # Templating
 
-wigは、テンプレートエンジンとしてnunjucksを採用しています。
-nunjucksは、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。
+wigは、テンプレートエンジンとして[nunjucks](https://mozilla.github.io/nunjucks/)を採用しています。
+[nunjucks](https://mozilla.github.io/nunjucks/)は、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。
 
-テンプレートの詳細は、nunjucksのドキュメントをご覧ください。
-nunjucks以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。
+テンプレートの詳細は、[nunjucks](https://mozilla.github.io/nunjucks/)のドキュメントをご覧ください。
+[nunjucks](https://mozilla.github.io/nunjucks/)以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。
 
 ## テンプレートの決定の仕組み
 
@@ -188,8 +293,6 @@ nunjucks以外のテンプレートエンジンを使いたい場合は、render
 
 このルールから外れたテンプレートを使いたい場合は、dataで該当するファイル/ディレクトリのところに`_template`変数で指定してください。
 
-
-
 ## 自動出力されるテンプレート変数
 
 `data`ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。
@@ -199,4 +302,94 @@ nunjucks以外のテンプレートエンジンを使いたい場合は、render
 サイト内のリンクを相対パスで書きたい場合などに便利です。
 
 
-# API
+# JS API
+
+## constructor
+
+wigを初期化します。
+
+```
+let Wig = require('wig');
+let options = {}
+let wigInstance = new Wig(options);
+```
+
+### constructor options
+
+```
+let options = {
+  rootDir: '', // 処理する際のrootになるディレクトリの指定
+  dataDir: './data', // データ・パラメータのファイル格納用ディレクトリ
+  tmplDir: './templates', // テンプレートディレクトリ
+  publicDir: './public', // 出力先ディレクトリ
+  verbose: true, // trueにすると、ファイル出力時に、出力パスなどの情報を出力します
+  vars: {} // テンプレート向けのグローバル変数を初期化時に指定する
+}
+```
+
+## .build()
+
+静的ファイルを出力します。
+
+```
+let Wig = require('wig');
+let options = {}
+let wigInstance = new Wig(options);
+
+wigInstance.build();
+```
+
+## .addRendererFilter(filterName,filterFunc)
+
+nunjucksにフィルタを追加します。
+
+```
+let Wig = require('wig');
+let options = {}
+let wigInstance = new Wig(options);
+
+wigInstance.addRendererFilter('date', function(date,postfix){
+  var d = new Date(Date.parse(date));
+  return d.toDateString() + postfix;
+});
+
+wigInstance.build();
+```
+
+# Command line API
+
+## install
+
+```
+npm install -g wig
+```
+
+## wig
+
+```
+wig
+```
+
+バージョン等を表示します。
+
+```
+-V, --version    output the version number
+-h, --help       output usage information
+```
+
+## wig build
+
+```
+wig build
+```
+
+dataディレクトリとtemplateディレクトリの内容を元に、静的ファイル一式をビルドします。
+
+```
+-d, --data_dir <path>    Data directory (default:./data)
+-t, --tmpl_dir <path>    Template dirctory (default:./templates)
+-p, --public_dir <path>  Output dirctory (default:./public)
+-v, --verbose            Display rendered files names
+-a, --assign <items>     Assign template vars (KEY,VALUE,KEY,VALUE...)(default:"")
+-h, --help               output usage information
+```

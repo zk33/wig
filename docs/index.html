@@ -21,22 +21,25 @@
       <nav class="main-nav">
         <ul class="main-nav-items">
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">What?</a>
+            <a class="main-nav-item-link" href="#what-is-wig-">What is wig?</a>
           </li>
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">Concept</a>
+            <a class="main-nav-item-link" href="#concept">Concept</a>
           </li>
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">Getting started</a>
+            <a class="main-nav-item-link" href="#getting-started">Getting started</a>
           </li>
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">Setup data</a>
+            <a class="main-nav-item-link" href="#setup-data">Setup data</a>
           </li>
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">Templating</a>
+            <a class="main-nav-item-link" href="#templating">Templating</a>
           </li>
           <li class="main-nav-item">
-            <a class="main-nav-item-link" href="#">API</a>
+            <a class="main-nav-item-link" href="#js-api">JS API</a>
+          </li>
+          <li class="main-nav-item">
+            <a class="main-nav-item-link" href="#command-line-api">Command Line API</a>
           </li>
         </ul>
       </nav>
@@ -62,7 +65,7 @@
             </div>
           </div>
           <div class="main-chart-command">
-            <p><code>wig build / Wig.build()</code></p>
+            <p><code>wig build / wig.build()</code></p>
           </div>
           <div class="main-chart-result">
             <h2>static web site/document
@@ -78,32 +81,81 @@
         </ul>
         <p>そんな時、わざわざ全てのページを開いて、HTMLを書き換えるのは、手間もかかりますしミスも多くなります。 そんな苦労から一切おさらばし、より安全確実に、スピーディにWebサイトを更新し続けられるようにと作られたのがwigです。</p>
         <p>wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。</p>
-        <h1 id="quick-start">Quick-start</h1>
-        <p>wigをインストールします。</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
+        <h1 id="getting-started">Getting started</h1>
+        <h2 id="1-">1.ディレクトリの準備</h2>
+        <p>プロジェクトのルートディレクトリに、３つのディレクトリを準備します。</p> <pre><code class="lang-text">/data ・・ データを格納します
+/templates ・・ テンプレートを格納します
+/public ・・ ビルドした静的ファイルが出力されます
 </code></pre>
-        <p>ディレクトリを作ります</p> <pre><code>
+        <p>※ 各ディレクトリはオプションで指定できます</p>
+        <h2 id="2-1-">2-1.コマンドラインでビルドする</h2>
+        <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> -g wig
 </code></pre>
-        <p>ビルドコマンドを叩きます</p> <pre><code><span class="hljs-attribute">wig build</span>
+        <p>データとテンプレートを用意したら、ビルドコマンドを走らせます。</p> <pre><code><span class="hljs-attribute">wig build</span>
 </code></pre>
-        <p>もしくは、gulpなどのタスクランナーで、ビルドコマンドを走らせます。</p>
-        <p>最小限のセットアップ（gulpを使う場合）は、
-          <a href="#">リポジトリ</a>に例があります。 CSSなどを含めたセットアップは、
-          <a href="https://github.com/zk33/actless">actless</a>を使うと便利です。</p>
+        <h2 id="2-2-">2-2.タスクランナーでビルドする</h2>
+        <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
+</code></pre>
+        <p>gulpfile.jsにタスクを用意します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
+<span class="hljs-keyword">let</span> builder;
+<span class="hljs-keyword">let</span> opt = {
+  <span class="hljs-attr">dataDir</span>:<span class="hljs-string">"./data"</span>, <span class="hljs-comment">// dataを格納するディレクトリ</span>
+  publicDir:<span class="hljs-string">"./public"</span>, <span class="hljs-comment">// 出力（＝公開）ディレクトリ</span>
+  tmplDir:<span class="hljs-string">"./templates"</span> <span class="hljs-comment">// テンプレートを格納するディレクトリ</span>
+}
+
+gulp.task(<span class="hljs-string">'wig'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (!builder) {
+    builder = <span class="hljs-keyword">new</span> Wig(opt);
+  }
+  <span class="hljs-keyword">try</span> {
+    builder.build();
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-built_in">console</span>.log(e);
+  }
+});
+
+<span class="hljs-keyword">let</span> watchSrc = [
+  path.join(rootPath, opt.dataDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>),
+  path.join(rootPath, opt.tmplDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>)
+]
+
+gulp.task(<span class="hljs-string">'wig:watch'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  watch(watchSrc, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    gulp.start(<span class="hljs-string">'actless:wig'</span>);
+  });
+});
+
+gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">'wig'</span>,<span class="hljs-string">'wig:watch'</span>]);
+</code></pre>
+        <p>gulpを走らせます</p> <pre><code><span class="hljs-attribute">gulp</span>
+</code></pre>
+        <hr>
+        <p>※最小限のセットアップ（gulpを使う場合）は、
+          <a href="#">サンプル</a>に例があります。
+          <br>CSSなどを含めたセットアップは、
+          <a href="https://github.com/zk33/actless">actless</a>を使うと便利です。
+          <br>このドキュメントもwigで作られていますので、参考にしてください！</p>
         <h1 id="setup-data">Setup data</h1>
-        <p>データには、２つの役割があります。</p>
-        <ul>
-          <li>どの階層に、どういう名前のページを出力するかを定義する</li>
-          <li>ページ内に出力する内容/パラメータを定義する</li>
-        </ul>
-        <h2 id="-">ページ定義</h2>
-        <p>ページの定義は、２つの方法があります。</p>
-        <h3 id="-">出力したいファイルと同名のファイルを置く</h3>
-        <p><code>data</code>ディレクトリ内に <code>data/index.text</code> <code>data/index.md</code> などのファイルを置いてビルドすると、 <code>public</code>ディレクトリに <code>public/index.html</code> が出力されます。</p>
-        <p>
-          <strong>ファイル名は、<code>_</code>（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）</strong>
-        </p>
-        <h3 id="_contents-"><code>_contents</code>パラメータを使う</h3>
-        <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>というパラメータを設定すると、それに基づいてページが出力されます。</p> <pre><code>{
+        <p><code>/data</code>ディレクトリ内のデータには、２つの役割があります。</p>
+        <ol>
+          <li>
+            <strong>どの階層に、どういう名前でページを出力するかを決める</strong>
+          </li>
+          <li>
+            <strong>各ページで使う変数を定義する</strong>
+          </li>
+        </ol>
+        <h2 id="1-">1. 出力するページを指定する</h2>
+        <p>出力するページの指定には、２つの方法があります。</p>
+        <h3 id="1-1-">1-1. 出力したいファイルと同名のファイルを置く</h3>
+        <p><code>data</code>ディレクトリ内に、<code>data/index.txt</code>、<code>data/index.md</code>などのファイルを置いてビルドすると、 <code>public</code>ディレクトリに、<code>public/index.html</code>が出力されます。</p>
+        <p>Markdownファイル（<code>.md</code>）を中心にサイトを作っていくような場合にはこちらの方法を使うと便利です。</p>
+        <p>※この場合のファイル名は、<code>_</code>（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）</p>
+        <h3 id="1-2-_contents-">1-2.<code>_contents</code>パラメータを使う</h3>
+        <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>というパラメータを設定すると、それに基づいてページが出力されます。
+          <br>その際、<code>_contents</code>が定義されているファイルの名前がディレクトリ名になります。 もし、ファイル名をディレクトリ名として使わない場合は、<code>__init__.json</code>というファイルに<code>_contents</code>パラメータを定義してください。</p>
+        <p>たとえば、以下の内容を、</p> <pre><code class="lang-json">{
   <span class="hljs-attr">"_contents"</span>:{
     <span class="hljs-attr">"index"</span>:{
       <span class="hljs-attr">"title"</span>:<span class="hljs-string">"indexページ"</span>
@@ -128,18 +180,48 @@
 }
 
 </code></pre>
-        <p>その際、<code>_contents</code>が定義されているファイル名がディレクトリになります。 もし↑の内容が<code>data/hello,json</code>に書かれていた場合は、<code>public/hello/index.html</code>や<code>public/hello/profile.html</code>が出力されます。 ディレクトリを作りたくない場合は、<code>__init__.json</code>というファイルに書いてください。</p>
-        <h2 id="-">パラメータの定義</h2>
-        <p>テンプレートに渡すパラメータを定義することができます。</p>
-        <h3 id="-">ファイル内で定義する</h3>
-        <h3 id="-">ファイルで定義する</h3>
-        <h3 id="-">継承の仕組み</h3>
-        <h3 id="-">特殊パラメータ</h3>
-        <p><code>_ext</code> ファイルを出力する時に、拡張子を指定したものに変更することができます。</p>
-        <p><code>_template</code> テンプレートのファイル名を指定します</p>
+        <p><code>data/hello.json</code>に書いた場合は、<code>public</code>ディレクトリに</p> <pre><code>hello/index<span class="hljs-selector-class">.html</span>
+hello/profile<span class="hljs-selector-class">.html</span>
+hello/works/work1<span class="hljs-selector-class">.html</span>
+hello/works/work2<span class="hljs-selector-class">.html</span>
+hello/contact.html
+</code></pre>
+        <p>が出力されます。
+          <br><code>data/__init__.json</code>に書いた場合は</p> <pre><code>index<span class="hljs-selector-class">.html</span>
+profile<span class="hljs-selector-class">.html</span>
+works/work1<span class="hljs-selector-class">.html</span>
+works/work2<span class="hljs-selector-class">.html</span>
+contact.html
+</code></pre>
+        <p>が出力されます。</p>
+        <h2 id="2-">2.パラメータの定義</h2>
+        <p><code>data</code>ディレクトリのJSONファイルで、テンプレートに渡す変数を定義することができます。 たとえば、ページのタイトルやdescriptionをdataページで決めたり、ページの処理を分岐させるためにIDを渡すなど、様々に活用できます。</p>
+        <h3 id="2-1-">2-1. ファイルで定義する</h3>
+        <p>アンダースコア（<code>_</code>）を最初につけたファイルは、パラメータとして扱われます。</p>
+        <p>たとえば、<code>data/_hello.txt</code>の中身は、「hello」という名前でテンプレートに渡されます。</p>
+        <p>アンダースコア（<code>_</code>）を最初につけたファイルが、JSONなどの複数パラメータを設定できるファイルの場合、ファイル名を変数名とした<code>Object</code>になります。</p>
+        <p><code>data/_hello.json</code>の中身が</p> <pre><code>{
+  <span class="hljs-attr">"world"</span>:<span class="hljs-string">"yay!"</span>
+}
+</code></pre>
+        <p>の場合、テンプレート上では</p> <pre><code>{{ hello.world }}
+</code></pre>
+        <p>で表示させることができます。</p>
+        <h3 id="2-2-json-yaml-">2-2. JSONやyamlなどのファイルで複数のパラメータを定義する</h3>
+        <h2 id="3-">3. パラメータの継承</h2>
+        <p>親階層で定義したパラメータは、子階層で使うことができます。</p>
+        <h2 id="4-">4. 特殊パラメータ</h2>
+        <ul>
+          <li><code>_ext</code>：ファイルを出力する時に、拡張子を指定したものに変更することができます。</li>
+          <li><code>_template</code>：テンプレートのファイル名を指定します。</li>
+        </ul>
         <h1 id="templating">Templating</h1>
-        <p>wigは、テンプレートエンジンとしてnunjucksを採用しています。 nunjucksは、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。</p>
-        <p>テンプレートの詳細は、nunjucksのドキュメントをご覧ください。 nunjucks以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。</p>
+        <p>wigは、テンプレートエンジンとして
+          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>を採用しています。
+          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>は、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。</p>
+        <p>テンプレートの詳細は、
+          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>のドキュメントをご覧ください。
+          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。</p>
         <h2 id="-">テンプレートの決定の仕組み</h2>
         <p>ファイルを出力する際、<code>template</code>フォルダ内のどのテンプレートを使ってレンダリングするかは、<code>data</code>で決められたファイル名を元にして、自動的に決まる仕組みになっています。</p>
         <h3 id="-">テンプレートのルール</h3>
@@ -171,8 +253,57 @@
         <h2 id="-">自動出力されるテンプレート変数</h2>
         <p><code>data</code>ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。</p>
         <p><code>_rel_root</code> <code>public</code>のルートディレクトリまでの相対パスを出力します。 サイト内のリンクを相対パスで書きたい場合などに便利です。</p>
-        <h1 id="api">API</h1>
-      </div>
+        <h1 id="js-api">JS API</h1>
+        <h2 id="constructor">constructor</h2>
+        <p>wigを初期化します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
+<span class="hljs-keyword">let</span> options = {}
+<span class="hljs-keyword">let</span> wigInstance = <span class="hljs-keyword">new</span> Wig(options);
+</code></pre>
+        <h3 id="constructor-options">constructor options</h3> <pre><code><span class="hljs-keyword">let</span> options = {
+  rootDir: <span class="hljs-string">''</span>, <span class="hljs-comment">// 処理する際のrootになるディレクトリの指定</span>
+  dataDir: <span class="hljs-string">'./data'</span>, <span class="hljs-comment">// データ・パラメータのファイル格納用ディレクトリ</span>
+  tmplDir: <span class="hljs-string">'./templates'</span>, <span class="hljs-comment">// テンプレートディレクトリ</span>
+  publicDir: <span class="hljs-string">'./public'</span>, <span class="hljs-comment">// 出力先ディレクトリ</span>
+  verbose: <span class="hljs-literal">true</span>, <span class="hljs-comment">// trueにすると、ファイル出力時に、出力パスなどの情報を出力します</span>
+  vars: {} <span class="hljs-comment">// テンプレート向けのグローバル変数を初期化時に指定する</span>
+}
+</code></pre>
+        <h2 id="-build-">.build()</h2>
+        <p>静的ファイルを出力します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
+<span class="hljs-keyword">let</span> options = {}
+<span class="hljs-keyword">let</span> wigInstance = <span class="hljs-keyword">new</span> Wig(options);
+
+wigInstance.build();
+</code></pre>
+        <h2 id="-addrendererfilter-filtername-filterfunc-">.addRendererFilter(filterName,filterFunc)</h2>
+        <p>nunjucksにフィルタを追加します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
+<span class="hljs-keyword">let</span> options = {}
+<span class="hljs-keyword">let</span> wigInstance = <span class="hljs-keyword">new</span> Wig(options);
+
+wigInstance.addRendererFilter(<span class="hljs-string">'date'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">date,postfix</span>)</span>{
+  <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-built_in">Date</span>.parse(<span class="hljs-built_in">date</span>));
+  <span class="hljs-keyword">return</span> d.toDateString() + postfix;
+});
+
+wigInstance.build();
+</code></pre>
+        <h1 id="command-line-api">Command line API</h1>
+        <h2 id="install">install</h2> <pre><code>npm <span class="hljs-keyword">install</span> -g wig
+</code></pre>
+        <h2 id="wig">wig</h2> <pre><code><span class="hljs-attribute">wig</span>
+</code></pre>
+        <p>バージョン等を表示します。</p> <pre><code>-V, --<span class="hljs-keyword">version</span>    output the <span class="hljs-keyword">version</span> <span class="hljs-keyword">number</span>
+-h, --<span class="hljs-keyword">help</span>       output usage information
+</code></pre>
+        <h2 id="wig-build">wig build</h2> <pre><code><span class="hljs-attribute">wig build</span>
+</code></pre>
+        <p>dataディレクトリとtemplateディレクトリの内容を元に、静的ファイル一式をビルドします。</p> <pre><code>-<span class="ruby">d, --data_dir &lt;path&gt;    Data directory (<span class="hljs-symbol">default:</span>./data)
+</span>-<span class="ruby">t, --tmpl_dir &lt;path&gt;    Template dirctory (<span class="hljs-symbol">default:</span>./templates)
+</span>-<span class="ruby">p, --public_dir &lt;path&gt;  Output dirctory (<span class="hljs-symbol">default:</span>./public)
+</span>-<span class="ruby">v, --verbose            Display rendered files names
+</span>-<span class="ruby">a, --assign &lt;items&gt;     Assign template vars (KEY,VALUE,KEY,VALUE...)(<span class="hljs-symbol">default:</span><span class="hljs-string">""</span>)
+</span>-<span class="ruby">h, --help               output usage information</span>
+</code></pre> </div>
     </main>
     <footer> </footer>
     <script src="./assets/js/main.js"></script>

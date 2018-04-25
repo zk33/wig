@@ -32,6 +32,7 @@
   overflow-wrap: break-word;
   flex: 1;
   padding-top: 60px;
+  padding-bottom: 8em;
   @include screen_sm {}
   @include screen_hh {}
 
@@ -52,8 +53,8 @@
     max-width: 100%;
   }
 
-  input[type=checkbox] {
-    margin-right: 0.5em;
+  strong{
+    font-weight: 600;
   }
 
   h1,
@@ -290,7 +291,7 @@
     border:8px solid $g_color_brand;
     border-top:0;
     content:"";
-    height: 20px;
+    height: 18px;
     width: 52.5%;
     margin-left:auto;
     margin-right: auto;
