@@ -2,17 +2,25 @@
 <html lang="">
   <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>wig.js - DRY-concept static web/document generator</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
     <link rel="stylesheet" href="{{_rel_root}}/assets/css/style.css">
   </head>
   <body>
-    <header>
-      <h1 class="header-h">
-      {% block header %}{% endblock %}
+    <header class="header">
+      <div class="header-content">
+        <h1 class="header-h">wig.js</h1>
+        <p class="header-desc">DRY-concept static web/document generator</p>
+        <nav class="header-nav">
+          <a href="https://github.com/zk33/wig">github</a>
+        </nav>
+      </div>
     </header>
-    <main>
+    <main class="main">
       {% block main %}
+      <div class="main-content">
         {{_html|safe}}
+      </div>
       {% endblock %}
     </main>
     <footer>

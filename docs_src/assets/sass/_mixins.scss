@@ -1,0 +1,64 @@
+@import "vars";
+
+/* responsive utility */
+@mixin screen_hh_small {
+  @media screen and (max-width: $g_width_hh_regular) {
+    @content;
+  }
+}
+@mixin screen_hh{
+  @media screen and (max-width: $g_width_hh_max){
+    @content;
+  }
+}
+@mixin screen_sm{
+  @media screen and (max-width: $g_width_sm_max){
+    @content;
+  }
+}
+@mixin screen_md{
+  @media screen and (max-width: $g_width_md_max){
+    @content;
+  }
+}
+@mixin screen_lg{
+  @media screen and (max-width: $g_width_lg_max){
+    @content;
+  }
+}
+@mixin screen_sm_only{
+  @media screen and (min-width: $g_width_hh_max + 1) and (max-width: $g_width_sm_max){
+    @content;
+  }
+}
+@mixin screen_md_only{
+  @media screen and (min-width: $g_width_sm_max + 1) and (max-width: $g_width_md_max){
+    @content;
+  }
+}
+@mixin screen_lg_only{
+  @media screen and (min-width: $g_width_md_max + 1){
+    @content;
+  }
+}
+@mixin screen_ll_only{
+  @media screen and (min-width: $g_width_lg_max + 1){
+    @content;
+  }
+}
+
+@mixin img_2x{
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    @content;
+  }
+}
+@mixin max_width($w){
+  @media screen and (max-width:$w){
+    @content;
+  }
+}
+@mixin min_width($w){
+  @media screen and (min-width:$w){
+    @content;
+  }
+}
