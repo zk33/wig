@@ -6,14 +6,35 @@
 
 # What is wig?
 
-wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。
-継承というコンセプトを活用し、できるだけ「コピペ」をする事なく、DRYに静的サイトを構築することができます。
+wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。  
+JSON等で定義されたデータと、テンプレートを結合し、静的ページを出力します。
+
+<div class="main-chart">
+  <div class="main-chart-conbine">
+    <div class="main-chart-conbine-item">
+      <h2>data</h2>
+      <p>json, js, Markdown, yaml, text etc.</p>
+    </div>
+    <div class="main-chart-conbine-item mode-plus">+</div>
+    <div class="main-chart-conbine-item">
+      <h2>template</h2>
+      <p>nunjucks template</p>
+    </div>
+  </div>
+  <div class="main-chart-command">
+    <p><code>wig build / Wig.build()</code></p>
+  </div>
+  <div class="main-chart-result">
+    <h2>static web site/document<h2>
+  </div>
+</div>
+
 
 # Concept
 
-wigのコンセプトは「DRY」です。
+wigのコンセプトは「DRY(Don't Repeat Yourself)」です。
 
-Webサイトを作っている時に、こんなこともまれによくあります。
+Webサイトを作っている時に、まれによくある
 
 * グローバルナビゲーションに修正が入って、全ページを書き換えないといけなくなった
 * 大量にある同じレイアウトのページでレイアウト変更が入って、全部書き換えないといけなくなった
@@ -22,21 +43,6 @@ Webサイトを作っている時に、こんなこともまれによくあり�
 そんな苦労から一切おさらばし、より安全確実に、スピーディにWebサイトを更新し続けられるようにと作られたのがwigです。
 
 wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。
-
-
-## もう少し詳しく
-
-Webページは、「データ」と「テンプレート」に分解することができます。
-
-
-wigでは、この「データ」と「テンプレート」を作ることで、サイトを構築していきます。
-
-
-Webサイトは、大抵はディレクトリ構造を持っています。
-同じディレクトリ内にあるページは、同じようなデータとテンプレートで表示される事が多いはずです。
-なので、データは階層構造を持ち、親階層で定義されたデータを、子階層で継承、オーバーライド（上書き）できます。
-
-テンプレートは、nunjucksの力によって、テンプレートを継承したり、macroやincludeを活用するなどして、効率的に書く事ができます。
 
 
 # Quick-start

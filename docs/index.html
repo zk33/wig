@@ -10,7 +10,7 @@
       <div class="header-content">
         <figure class="header-img">
           <img class="header-img-img" src="./assets/img/img.png" alt="" /> </figure>
-        <h1 class="header-h">wig.js</h1>
+        <h1 class="header-h">{{wig.js}}</h1>
         <p class="header-desc">DRY-concept static site/document generator</p>
         <nav class="header-nav">
           <a href="https://github.com/zk33/wig">github</a>
@@ -47,21 +47,37 @@
 #author: your name
 --->
         <h1 id="what-is-wig-">What is wig?</h1>
-        <p>wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。 継承というコンセプトを活用し、できるだけ「コピペ」をする事なく、DRYに静的サイトを構築することができます。</p>
+        <p>wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。
+          <br>JSON等で定義されたデータと、テンプレートを結合し、静的ページを出力します。</p>
+        <div class="main-chart">
+          <div class="main-chart-conbine">
+            <div class="main-chart-conbine-item">
+              <h2>data</h2>
+              <p>json, js, Markdown, yaml, text etc.</p>
+            </div>
+            <div class="main-chart-conbine-item mode-plus">+</div>
+            <div class="main-chart-conbine-item">
+              <h2>template</h2>
+              <p>nunjucks template</p>
+            </div>
+          </div>
+          <div class="main-chart-command">
+            <p><code>wig build / Wig.build()</code></p>
+          </div>
+          <div class="main-chart-result">
+            <h2>static web site/document
+              <h2>
+          </div>
+        </div>
         <h1 id="concept">Concept</h1>
-        <p>wigのコンセプトは「DRY」です。</p>
-        <p>Webサイトを作っている時に、こんなこともまれによくあります。</p>
+        <p>wigのコンセプトは「DRY(Don&#39;t Repeat Yourself)」です。</p>
+        <p>Webサイトを作っている時に、まれによくある</p>
         <ul>
           <li>グローバルナビゲーションに修正が入って、全ページを書き換えないといけなくなった</li>
           <li>大量にある同じレイアウトのページでレイアウト変更が入って、全部書き換えないといけなくなった</li>
         </ul>
         <p>そんな時、わざわざ全てのページを開いて、HTMLを書き換えるのは、手間もかかりますしミスも多くなります。 そんな苦労から一切おさらばし、より安全確実に、スピーディにWebサイトを更新し続けられるようにと作られたのがwigです。</p>
         <p>wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。</p>
-        <h2 id="-">もう少し詳しく</h2>
-        <p>Webページは、「データ」と「テンプレート」に分解することができます。</p>
-        <p>wigでは、この「データ」と「テンプレート」を作ることで、サイトを構築していきます。</p>
-        <p>Webサイトは、大抵はディレクトリ構造を持っています。 同じディレクトリ内にあるページは、同じようなデータとテンプレートで表示される事が多いはずです。 なので、データは階層構造を持ち、親階層で定義されたデータを、子階層で継承、オーバーライド（上書き）できます。</p>
-        <p>テンプレートは、nunjucksの力によって、テンプレートを継承したり、macroやincludeを活用するなどして、効率的に書く事ができます。</p>
         <h1 id="quick-start">Quick-start</h1>
         <p>wigをインストールします。</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
 </code></pre>

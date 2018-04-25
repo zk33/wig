@@ -23,6 +23,9 @@
 .main-nav-item-link{
   text-decoration:none;
 }
+
+// markdown styling ========================
+
 .main-content {
   position: relative;
   word-wrap: break-word;
@@ -225,4 +228,80 @@
       font-size: $g_font_size_sm - 2px;
     }
   }
+}
+
+// chart ===================
+
+.main-chart{
+  margin:2em 0;
+}
+.main-chart-conbine{
+  display: flex;
+  align-items: center;
+}
+.main-chart-conbine-item{
+  width: 45%;
+  text-align: center;
+  border-radius: $g_radius;
+  background:$g_color_brand;
+  &.mode-plus{
+    width: 10%;
+    background:none;
+    font-size: 80px;
+    font-family: $g_font_h;
+    line-height: 1;
+  }
+  h2{
+    margin:16px 0;
+  }
+}
+.main-chart-command{
+  p{
+    max-width: 300px;
+    margin:14px auto;
+    text-align: center;
+    font-size: 1.2em;
+    border:8px solid $g_color_brand;
+    border-radius: $g_radius;
+    position: relative;
+    font-weight: bold;
+    padding-top:1em;
+    padding-bottom:1em;
+    &::before,
+    &::after{
+      width: 8px;
+      height: 28px;
+      content: "";
+      background: $g_color_brand;
+      position: absolute;
+      display: block;
+      left: 50%;
+      margin-left:-4px;
+    }
+    &::before{
+      top:-28px;
+    }
+    &::after{
+      top:100%;
+    }
+  }
+  &::before{
+    display: block;
+    border:8px solid $g_color_brand;
+    border-top:0;
+    content:"";
+    height: 20px;
+    width: 52.5%;
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 0 0 $g_radius $g_radius;
+  }
+}
+.main-chart-result{
+  background: $g_color_brand;
+  text-align: center;
+  padding:1px;
+  border-radius: $g_radius;
+  max-width: 380px;
+  margin: 0 auto;
 }
