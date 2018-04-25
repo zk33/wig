@@ -9,14 +9,34 @@
   <body>
     <header class="header">
       <div class="header-content">
+        <figure class="header-img">
+          <img class="header-img-img" src="{{_rel_root}}/assets/img/img.png" alt="" />
+        </figure>
         <h1 class="header-h">wig.js</h1>
-        <p class="header-desc">DRY-concept static web/document generator</p>
+        <p class="header-desc">DRY-concept static site/document generator</p>
         <nav class="header-nav">
           <a href="https://github.com/zk33/wig">github</a>
         </nav>
       </div>
     </header>
     <main class="main">
+      <nav class="main-nav">
+        <ul class="main-nav-items">
+          {% set items=[
+              ['#','What?'],
+              ['#','Concept'],
+              ['#','Getting started'],
+              ['#','Setup data'],
+              ['#','Templating'],
+              ['#','API']
+            ] %}
+          {% for item in items %}
+          <li class="main-nav-item">
+            <a class="main-nav-item-link" href="{{item[0]}}">{{item[1]}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
       {% block main %}
       <div class="main-content">
         {{_html|safe}}

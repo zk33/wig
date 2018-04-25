@@ -1,4 +1,12 @@
 html,body{
   margin: 0;
   padding: 0;
+  color:$g_color_text;
+  font-family: $g_font_base;
+  font-size: $g_font_size;
+  font-weight: 300;
+  line-height: 1.78;
+}
+a{
+  color:$g_color_link;
 }

@@ -1,12 +1,14 @@
 $g_color_bg_h:#95e2dc;
 $g_color_bg_main:#fff;
-$g_color_link:darken($g_color_bg_h,20%);
+$g_color_link:darken($g_color_bg_h,24%);
 $g_color_brand:$g_color_bg_h;
 $g_color_border:#ccc;
-$g_color_text:#666;
+$g_color_text_h: #3c2b00;
+$g_color_text: #665;
 $g_color_text_light:#808080;
-$g_color_text_bg_dark:#aaa;
+$g_color_text_bg_dark:#f8f7f0;
 
+$g_font_base: -apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3",Meiryo,メイリオ,"MS PGothic",sans-serif;
 $g_font_h:Nunito, sans-serif;
 $g_font_code: Consolas, 'Liberation Mono', Menlo,  Courier, emoji, 'Hiragino Kaku Gothic Pro', monospace;
 
