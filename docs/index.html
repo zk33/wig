@@ -73,14 +73,29 @@
           </div>
         </div>
         <h1 id="concept">Concept</h1>
-        <p>wigのコンセプトは「DRY(Don&#39;t Repeat Yourself)」です。</p>
-        <p>Webサイトを作っている時に、まれによくある</p>
+        <p>wigのコンセプトは「
+          <strong>DRY(Don&#39;t Repeat Yourself)</strong>」です。 </p>
+        <p>wig（と、その前身である
+          <a href="https://github.com/zk33/negi">negi</a>）は元々、更新頻度の高い、多言語展開された中規模Webサイトを、長く更新し続けていくために作られたツールで、多数のページを確実に管理していくため、</p>
         <ul>
-          <li>グローバルナビゲーションに修正が入って、全ページを書き換えないといけなくなった</li>
-          <li>大量にある同じレイアウトのページでレイアウト変更が入って、全部書き換えないといけなくなった</li>
+          <li>できる限りコピペしないで済む</li>
+          <li>最低限の修正作業で、確実に全ページが更新されるようにする</li>
+          <li>大きなレイアウト変更にも対応できるようにする</li>
         </ul>
-        <p>そんな時、わざわざ全てのページを開いて、HTMLを書き換えるのは、手間もかかりますしミスも多くなります。 そんな苦労から一切おさらばし、より安全確実に、スピーディにWebサイトを更新し続けられるようにと作られたのがwigです。</p>
-        <p>wigでは、テンプレートエンジンや、JSON等によるデータ定義を活用することで、早く確実なサイト構築を実現します。</p>
+        <p>ということが必要でした。</p>
+        <p>その実現のため、</p>
+        <ul>
+          <li>継承やマクロなどを駆使してDRYに書けるテンプレートエンジン
+            <strong>
+              <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>
+            </strong>
+          </li>
+        </ul>
+        <p>を主軸にして、</p>
+        <ul>
+          <li>テンプレートに渡す変数の管理を便利にする<code>data</code>の仕組み</li>
+        </ul>
+        <p>を組み合わせて作られた静的サイトジェネレータがwigです。</p>
         <h1 id="getting-started">Getting started</h1>
         <h2 id="1-">1.ディレクトリの準備</h2>
         <p>プロジェクトのルートディレクトリに、３つのディレクトリを準備します。</p> <pre><code class="lang-text">/data ・・ データを格納します
@@ -88,13 +103,20 @@
 /public ・・ ビルドした静的ファイルが出力されます
 </code></pre>
         <p>※ 各ディレクトリはオプションで指定できます</p>
-        <h2 id="2-1-">2-1.コマンドラインでビルドする</h2>
+        <h2 id="2-">2. データとテンプレートの作成</h2>
+        <p>
+          <a href="#setup-data">Setup data</a>と
+          <a href="#templating">Templating</a>を参考に、データとテンプレートを用意します。
+          <br>
+          <a href="https://github.com/zk33/wig/tree/master/sample">https://github.com/zk33/wig/tree/master/sample</a> にサンプルもありますので参考にしてください。</p>
+        <h2 id="3-">3.ビルドする</h2>
+        <h3 id="3-1-">3-1.コマンドラインでビルドする</h3>
         <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> -g wig
 </code></pre>
-        <p>データとテンプレートを用意したら、ビルドコマンドを走らせます。</p> <pre><code><span class="hljs-attribute">wig build</span>
+        <p>ビルドコマンドを走らせます。</p> <pre><code><span class="hljs-attribute">wig build</span>
 </code></pre>
-        <h2 id="2-2-">2-2.タスクランナーでビルドする</h2>
-        <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
+        <h3 id="3-2-">3-2.タスクランナーでビルドする</h3>
+        <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> wig gulp gulp-watch
 </code></pre>
         <p>gulpfile.jsにタスクを用意します。</p> <pre><code><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
 
@@ -108,7 +130,8 @@
   <span class="hljs-attr">rootDir</span>:__dirname, <span class="hljs-comment">// プロジェクトのrootディレクトリ指定</span>
   dataDir:<span class="hljs-string">"./data"</span>, <span class="hljs-comment">// dataを格納するディレクトリ</span>
   publicDir:<span class="hljs-string">"./public"</span>, <span class="hljs-comment">// 出力（＝公開）ディレクトリ</span>
-  tmplDir:<span class="hljs-string">"./templates"</span> <span class="hljs-comment">// テンプレートを格納するディレクトリ</span>
+  tmplDir:<span class="hljs-string">"./templates"</span>, <span class="hljs-comment">// テンプレートを格納するディレクトリ</span>
+  verbose: <span class="hljs-literal">true</span> <span class="hljs-comment">// ファイル出力時に出力したファイル名と使ったテンプレート名を表示します</span>
 }
 
 gulp.task(<span class="hljs-string">'wig'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
@@ -139,30 +162,58 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
 </code></pre>
         <hr>
         <p>※最小限のセットアップ（gulpを使う場合）は、
-          <a href="#">サンプル</a>に例があります。
+          <a href="https://github.com/zk33/wig/tree/master/sample">サンプル</a>に例があります。
           <br>CSSなどを含めたセットアップは、
           <a href="https://github.com/zk33/actless">actless</a>を使うと便利です。
-          <br>このドキュメントもwigで作られていますので、参考にしてください！</p>
+          <br>ちなみにこのドキュメントもwigで作られていますので、参考にしてください！</p>
         <h1 id="setup-data">Setup data</h1>
         <p><code>/data</code>ディレクトリ内のデータには、２つの役割があります。</p>
         <ol>
           <li>
-            <strong>どの階層に、どういう名前でページを出力するかを決める</strong>
+            <strong>どの階層に、どういう名前でページを出力するかを指定する</strong>
           </li>
           <li>
             <strong>各ページで使う変数を定義する</strong>
           </li>
         </ol>
         <h2 id="1-">1. 出力するページを指定する</h2>
-        <p>出力するページの指定には、２つの方法があります。</p>
+        <p><code>data</code>ディテクトリ内に置いたファイル（と、その中身）によって、どのような名前のファイルをどの階層に出力するかを設定することができます。
+          <br>出力するページの指定には、２つの方法があります。</p>
         <h3 id="1-1-">1-1. 出力したいファイルと同名のファイルを置く</h3>
-        <p><code>data</code>ディレクトリ内に、<code>data/index.txt</code>、<code>data/index.md</code>などのファイルを置いてビルドすると、 <code>public</code>ディレクトリに、<code>public/index.html</code>が出力されます。</p>
-        <p>Markdownファイル（<code>.md</code>）を中心にサイトを作っていくような場合にはこちらの方法を使うと便利です。</p>
-        <p>※この場合のファイル名は、<code>_</code>（アンダースコア）から始めることはできません。（_から始まったファイルは、パラメータとして処理されます）</p>
+        <p><code>data</code>ディレクトリ内に、<code>/index.json</code>、<code>/index.js</code>、<code>/index.md</code>、などのファイルを置いてビルドすると、<code>public</code>ディレクトリに、<code>/index.html</code>が出力されます。</p>
+        <p><code>data</code>ディレクトリに置いたファイルの名前/階層と、出力されるファイルの名前/階層は同じになります。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>&#39;data&#39;に置くファイル</th>
+              <th><code>public</code>に出力されるファイル</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/index.js</td>
+              <td>/index.html</td>
+            </tr>
+            <tr>
+              <td>/foo/bar.md</td>
+              <td>/foo/bar.html</td>
+            </tr>
+            <tr>
+              <td>/foo/bar/baz.json</td>
+              <td>/foo/bar/baz.html</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>※ JSONやJS、YAMLファイルの場合は、ファイル内に書かれたデータ内容が、パラメータとしてテンプレートに渡されます。</p>
+        <p>※ 出力されるファイルの拡張子は「<code>_ext</code>」というパラメータで指定することができます。</p>
+        <p>※ JSONやJS、YAMLファイルで、ファイル内に<code>_contents</code>というパラメータが設定されている場合は、ファイル名がディレクトリとして扱われ、<code>_contents</code>に定義されたページがそのディレクトリ内に出力されます。</p>
+        <p>※ ページとして出力したい場合は、ファイル名を<code>_</code>（アンダースコア）から始めることができません。<code>_</code>から始まったファイルは、パラメータとして処理されます。</p>
         <h3 id="1-2-_contents-">1-2.<code>_contents</code>パラメータを使う</h3>
         <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>というパラメータを設定すると、それに基づいてページが出力されます。
-          <br>その際、<code>_contents</code>が定義されているファイルの名前がディレクトリ名になります。 もし、ファイル名をディレクトリ名として使わない場合は、<code>__init__.json</code>というファイルに<code>_contents</code>パラメータを定義してください。</p>
-        <p>たとえば、以下の内容を、</p> <pre><code class="lang-json">{
+          <br>その際、<code>_contents</code>が定義されているファイルの名前がディレクトリ名になります。 </p>
+        <p>もし、ファイル名をディレクトリ名として使わない場合は、<code>__init__.json</code>というファイルに<code>_contents</code>パラメータを定義してください。</p>
+        <p><code>_contents</code>は入れ子にもできるので、1ファイルでサイトの全てのページを定義することもできます。</p>
+        <p>たとえば以下の内容を、</p> <pre><code class="lang-json">{
   <span class="hljs-attr">"_contents"</span>:{
     <span class="hljs-attr">"index"</span>:{
       <span class="hljs-attr">"title"</span>:<span class="hljs-string">"indexページ"</span>
@@ -187,51 +238,145 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
 }
 
 </code></pre>
-        <p><code>data/hello.json</code>に書いた場合は、<code>public</code>ディレクトリに</p> <pre><code>hello/index<span class="hljs-selector-class">.html</span>
-hello/profile<span class="hljs-selector-class">.html</span>
-hello/works/work1<span class="hljs-selector-class">.html</span>
-hello/works/work2<span class="hljs-selector-class">.html</span>
-hello/contact.html
+        <p><code>data&#39;ディレクトリの</code>/hello.json<code>に書いた場合は、</code>public`ディレクトリには</p> <pre><code>/hello/index<span class="hljs-selector-class">.html</span>
+/hello/profile<span class="hljs-selector-class">.html</span>
+/hello/works/work1<span class="hljs-selector-class">.html</span>
+/hello/works/work2<span class="hljs-selector-class">.html</span>
+/hello/contact.html
 </code></pre>
         <p>が出力されます。
-          <br><code>data/__init__.json</code>に書いた場合は</p> <pre><code>index<span class="hljs-selector-class">.html</span>
-profile<span class="hljs-selector-class">.html</span>
-works/work1<span class="hljs-selector-class">.html</span>
-works/work2<span class="hljs-selector-class">.html</span>
-contact.html
+          <br><code>/__init__.json</code>に書いた場合は</p> <pre><code>/index<span class="hljs-selector-class">.html</span>
+/profile<span class="hljs-selector-class">.html</span>
+/works/work1<span class="hljs-selector-class">.html</span>
+/works/work2<span class="hljs-selector-class">.html</span>
+/contact.html
 </code></pre>
         <p>が出力されます。</p>
         <h2 id="2-">2.パラメータの定義</h2>
-        <p><code>data</code>ディレクトリのJSONファイルで、テンプレートに渡す変数を定義することができます。 たとえば、ページのタイトルやdescriptionをdataページで決めたり、ページの処理を分岐させるためにIDを渡すなど、様々に活用できます。</p>
+        <p><code>data</code>ディレクトリ内のJSON等のファイルで、テンプレートに渡す変数を定義することができます。
+          <br>たとえば、ページごとにタイトルやdescriptionを設定したり、テンプレート上でページの処理を分岐させるためにIDを渡すなど、様々に活用できます。</p>
         <h3 id="2-1-">2-1. ファイルで定義する</h3>
-        <p>アンダースコア（<code>_</code>）を最初につけたファイルは、パラメータとして扱われます。</p>
+        <p><code>data</code>ディレクトリ内に置かれたファイルのうち、ファイル名がアンダースコア（<code>_</code>）から始まるものは、パラメータとして扱われます。</p>
         <p>たとえば、<code>data/_hello.txt</code>の中身は、「hello」という名前でテンプレートに渡されます。</p>
         <p>アンダースコア（<code>_</code>）を最初につけたファイルが、JSONなどの複数パラメータを設定できるファイルの場合、ファイル名を変数名とした<code>Object</code>になります。</p>
-        <p><code>data/_hello.json</code>の中身が</p> <pre><code>{
-  <span class="hljs-attr">"world"</span>:<span class="hljs-string">"yay!"</span>
+        <p>たとえば、<code>data/_foo.json</code>の中身が</p> <pre><code>{
+  <span class="hljs-attr">"bar"</span>:<span class="hljs-string">"baz"</span>
 }
 </code></pre>
-        <p>の場合、テンプレート上では</p> <pre><code>{{ hello.world }}
+        <p>の場合、テンプレート上では</p> <pre><code>{{ foo.bar }}
 </code></pre>
         <p>で表示させることができます。</p>
-        <h3 id="2-2-json-yaml-">2-2. JSONやyamlなどのファイルで複数のパラメータを定義する</h3>
-        <h2 id="3-">3. パラメータの継承</h2>
-        <p>親階層で定義したパラメータは、子階層で使うことができます。</p>
-        <h2 id="4-">4. 特殊パラメータ</h2>
+        <h3 id="2-2-">2-2. ページ定義と一緒にパラメータを指定する</h3>
+        <p>ページ定義で配置したファイルに、一緒に変数を定義することができます。
+          <br>たとえば、以下のようにページと変数をまとめて設定できます。</p> <pre><code>{
+  <span class="hljs-attr">"IMG_DIR"</span>:<span class="hljs-string">"/assets/img"</span>,
+  <span class="hljs-attr">"title"</span>:<span class="hljs-string">"my cool website"</span>,
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"top"</span>
+    }
+    <span class="hljs-string">"profile"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"my profile"</span>,
+      <span class="hljs-attr">"foo"</span>:<span class="hljs-string">"bar"</span>
+    }
+  }
+}
+</code></pre>
+        <h2 id="3-">3. ディレクトリ構造とパラメータの関係</h2>
+        <p>変数は、ディレクトリごと、もしくはページごとに指定できます。
+          <br>ディレクトリ単位で設定された変数は、そのディレクトリと、その子階層のファイルの出力時にテンプレートに渡されます。</p> <pre><code>{
+  <span class="hljs-attr">"IMG_DIR"</span>:<span class="hljs-string">"/assets/img"</span>,
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{}
+    <span class="hljs-string">"profile"</span>:{},
+    <span class="hljs-attr">"works"</span>:{
+      <span class="hljs-attr">"_contents"</span>:{
+        <span class="hljs-attr">"work1"</span>:{},
+        <span class="hljs-attr">"work2"</span>:{}
+      }
+    }
+  }
+}
+</code></pre>
+        <p>この場合、<code>IMG_DIR</code>変数はこのファイルで定義されている全てのページで使えます。</p>
+        <p>子階層やページで同じ名前で変数を設定すると、親階層の変数定義をオーバーライドすることができます。</p> <pre><code>{
+  <span class="hljs-attr">"title"</span>:<span class="hljs-string">"my cool website"</span>,
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{}
+    <span class="hljs-string">"profile"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"my profile"</span>
+    },
+    <span class="hljs-attr">"works"</span>:{
+      <span class="hljs-attr">"title"</span>:<span class="hljs-string">"works"</span>,
+      <span class="hljs-attr">"_contents"</span>:{
+        <span class="hljs-attr">"work1"</span>:{},
+        <span class="hljs-attr">"work2"</span>:{}
+      }
+    }
+  }
+}
+</code></pre>
+        <h2 id="4-__init__-json">4. <code>__init__.json</code></h2>
+        <p>パラメータ/ページ定義ファイルのうち、<code>__init__.json</code>（または<code>__init__.js</code>）というファイルは、少し特別な扱いがされます。</p>
         <ul>
-          <li><code>_ext</code>：ファイルを出力する時に、拡張子を指定したものに変更することができます。</li>
-          <li><code>_template</code>：テンプレートのファイル名を指定します。</li>
+          <li><code>__init__.json</code>は、ディレクトリ内で最初に読み出されます</li>
+          <li><code>__init__.json</code>に<code>_contents</code>が設定されている場合、<code>_contents</code>で定義された出力ページは、<code>__init__</code>ディレクトリではなく、<code>__init__json</code>ファイルの置かれているのと同じ階層に出力されます。</li>
         </ul>
+        <h2 id="5-">5. 特殊変数</h2>
+        <p>基本的に、<code>data</code>ディレクトリ内で定義する変数名は、自由に設定して大丈夫なのですが、<code>_contents</code>変数のように、デフォルトの挙動を変更するための特殊な変数がいくつか定義されています。</p>
+        <h3 id="_ext"><code>_ext</code></h3>
+        <p>ファイルを出力する時に、拡張子を指定したものに変更することができます。 たとえばサイト全体をPHPとして出力したい場合は、<code>data</code>ディレクトリの<code>/__init__.json</code>に</p> <pre><code>{
+  <span class="hljs-attr">"_ext"</span>:<span class="hljs-string">"php"</span>
+}
+</code></pre>
+        <p>と書くことで、全てのファイルの拡張子を<code>.php</code>に変更することができます。
+          <br>ページ/ディレクトリ単位で変更したい場合は、</p> <pre><code>{
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{
+      <span class="hljs-attr">"_ext"</span>:<span class="hljs-string">"php"</span>
+    }
+    <span class="hljs-string">"profile"</span>:{},
+    <span class="hljs-attr">"works"</span>:{
+      <span class="hljs-attr">"_ext"</span>:<span class="hljs-string">"php"</span>,
+      <span class="hljs-attr">"_contents"</span>:{
+        <span class="hljs-attr">"work1"</span>:{},
+        <span class="hljs-attr">"work2"</span>:{},
+        <span class="hljs-attr">"work3"</span>:{}
+      }
+    }
+  }
+}
+</code></pre>
+        <p>というように必要なページやディレクトリ単位で<code>_ext</code>パラメータを設定してください。</p>
+        <h3 id="_template"><code>_template</code></h3>
+        <p>テンプレートのファイル名を指定します。
+          <br>wigではテンプレート名は出力するファイル名を元に自動で決定されますが、そのルール外のテンプレートを使いたい場合はこちらを指定してください。</p>
+        <p>こちらも<code>_ext</code>と同様、ディレクトリやファイル単位で指定できます。 </p> <pre><code>{
+  <span class="hljs-attr">"_contents"</span>:{
+    <span class="hljs-attr">"index"</span>:{
+      <span class="hljs-attr">"_template"</span>:<span class="hljs-string">"foo/bar/template.html"</span>
+    }
+    <span class="hljs-string">"profile"</span>:{},
+    <span class="hljs-attr">"works"</span>:{
+      <span class="hljs-attr">"_template"</span>:<span class="hljs-string">"foo/bar/for_works.html"</span>,
+      <span class="hljs-attr">"_contents"</span>:{
+        <span class="hljs-attr">"work1"</span>:{},
+        <span class="hljs-attr">"work2"</span>:{},
+        <span class="hljs-attr">"work3"</span>:{}
+      }
+    }
+  }
+}
+</code></pre>
         <h1 id="templating">Templating</h1>
         <p>wigは、テンプレートエンジンとして
           <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>を採用しています。
           <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>は、jinja2をベースにしたテンプレートエンジンで、継承の仕組みを持っています。</p>
         <p>テンプレートの詳細は、
-          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>のドキュメントをご覧ください。
-          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>以外のテンプレートエンジンを使いたい場合は、rendererを書くことで対応できます。</p>
-        <h2 id="-">テンプレートの決定の仕組み</h2>
-        <p>ファイルを出力する際、<code>template</code>フォルダ内のどのテンプレートを使ってレンダリングするかは、<code>data</code>で決められたファイル名を元にして、自動的に決まる仕組みになっています。</p>
-        <h3 id="-">テンプレートのルール</h3>
+          <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>のドキュメントをご覧ください。</p>
+        <h2 id="-">出力時に使用されるテンプレート</h2>
+        <p><code>public</code>にファイルを出力する時、<code>template</code>フォルダ内のどのテンプレートを使ってレンダリングするかは、<code>data</code>で決められた出力ファイル名を元にして、自動的に決まります。</p>
+        <h3 id="-">テンプレートの自動決定のルール</h3>
         <ol>
           <li>出力ファイルと完全に同じディレクトリ/ファイル名のテンプレートを探します /foo/bar.html -&gt; /foo/bar.html</li>
           <li>ディレクトリの区切りをアンダースコアに置換したものを探します /foo/bar.html -&gt; foo_bar.html</li>
@@ -257,9 +402,14 @@ contact.html
 </code></pre>
         <p>これを上から順に探して、見つかったテンプレートを使います。</p>
         <p>このルールから外れたテンプレートを使いたい場合は、dataで該当するファイル/ディレクトリのところに<code>_template</code>変数で指定してください。</p>
-        <h2 id="-">自動出力されるテンプレート変数</h2>
+        <h2 id="-">自動生成されるテンプレート変数</h2>
         <p><code>data</code>ディレクトリ内で定義された変数以外に、自動で生成されてテンプレートに渡される変数があります。</p>
-        <p><code>_rel_root</code> <code>public</code>のルートディレクトリまでの相対パスを出力します。 サイト内のリンクを相対パスで書きたい場合などに便利です。</p>
+        <h3 id="_rel_root"><code>_rel_root</code></h3>
+        <p><code>public</code>のルートディレクトリまでの相対パスを出力します。 サイト内のリンクを相対パスで書きたい場合などに便利です。</p> <pre><code><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{{_rel_root}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">/assets/img/logo.png"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span> /&gt;</span></span>
+</code></pre>
+        <p>と書くことで、</p> <pre><code>&lt;img <span class="hljs-attribute">src</span>=<span class="hljs-string">"../../assets/img/logo.png"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-string">""</span> /&gt;
+</code></pre>
+        <p>のように、ページの階層に応じた相対パスでルートディレクトリを参照させることができます</p>
         <h1 id="js-api">JS API</h1>
         <h2 id="constructor">constructor</h2>
         <p>wigを初期化します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
@@ -297,14 +447,9 @@ wigInstance.build();
         <h1 id="command-line-api">Command line API</h1>
         <h2 id="install">install</h2> <pre><code>npm <span class="hljs-keyword">install</span> -g wig
 </code></pre>
-        <h2 id="wig">wig</h2> <pre><code><span class="hljs-attribute">wig</span>
-</code></pre>
-        <p>バージョン等を表示します。</p> <pre><code>-V, --<span class="hljs-keyword">version</span>    output the <span class="hljs-keyword">version</span> <span class="hljs-keyword">number</span>
--h, --<span class="hljs-keyword">help</span>       output usage information
-</code></pre>
         <h2 id="wig-build">wig build</h2> <pre><code><span class="hljs-attribute">wig build</span>
 </code></pre>
-        <p>dataディレクトリとtemplateディレクトリの内容を元に、静的ファイル一式をビルドします。</p> <pre><code>-<span class="ruby">d, --data_dir &lt;path&gt;    Data directory (<span class="hljs-symbol">default:</span>./data)
+        <p>dataディレクトリとtemplateディレクトリの内容を元に、静的ファイル一式をビルドします。コマンドラインオプションは以下の通りです。</p> <pre><code>-<span class="ruby">d, --data_dir &lt;path&gt;    Data directory (<span class="hljs-symbol">default:</span>./data)
 </span>-<span class="ruby">t, --tmpl_dir &lt;path&gt;    Template dirctory (<span class="hljs-symbol">default:</span>./templates)
 </span>-<span class="ruby">p, --public_dir &lt;path&gt;  Output dirctory (<span class="hljs-symbol">default:</span>./public)
 </span>-<span class="ruby">v, --verbose            Display rendered files names

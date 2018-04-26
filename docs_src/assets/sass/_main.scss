@@ -95,6 +95,7 @@
 
   h1 {
     font-size: 2em;
+    margin-top: 4em;
     margin-bottom: .8em;
     &::before{
       display: block;
@@ -207,7 +208,9 @@
     vertical-align: baseline;
   }
 
-  table {}
+  table{
+    border-collapse: collapse
+  }
 
   td,
   th {
@@ -217,7 +220,7 @@
   }
 
   th {
-    background: #F0F0F0;
+    background: $g_color_text_bg_dark;
     @include screen_sm {
       font-size: $g_font_size_sm - 1px;
     }
