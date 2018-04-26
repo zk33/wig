@@ -96,10 +96,17 @@
         <h2 id="2-2-">2-2.タスクランナーでビルドする</h2>
         <p>wigをインストールします</p> <pre><code>npm <span class="hljs-keyword">install</span> wig
 </code></pre>
-        <p>gulpfile.jsにタスクを用意します。</p> <pre><code><span class="hljs-keyword">let</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
-<span class="hljs-keyword">let</span> builder;
-<span class="hljs-keyword">let</span> opt = {
-  <span class="hljs-attr">dataDir</span>:<span class="hljs-string">"./data"</span>, <span class="hljs-comment">// dataを格納するディレクトリ</span>
+        <p>gulpfile.jsにタスクを用意します。</p> <pre><code><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>);
+<span class="hljs-keyword">var</span> watch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-watch'</span>);
+
+<span class="hljs-keyword">var</span> Wig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wig'</span>);
+
+<span class="hljs-keyword">var</span> builder;
+<span class="hljs-keyword">var</span> opt = {
+  <span class="hljs-attr">rootDir</span>:__dirname, <span class="hljs-comment">// プロジェクトのrootディレクトリ指定</span>
+  dataDir:<span class="hljs-string">"./data"</span>, <span class="hljs-comment">// dataを格納するディレクトリ</span>
   publicDir:<span class="hljs-string">"./public"</span>, <span class="hljs-comment">// 出力（＝公開）ディレクトリ</span>
   tmplDir:<span class="hljs-string">"./templates"</span> <span class="hljs-comment">// テンプレートを格納するディレクトリ</span>
 }
@@ -115,9 +122,9 @@ gulp.task(<span class="hljs-string">'wig'</span>, <span class="hljs-function"><s
   }
 });
 
-<span class="hljs-keyword">let</span> watchSrc = [
-  path.join(rootPath, opt.dataDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>),
-  path.join(rootPath, opt.tmplDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>)
+<span class="hljs-keyword">var</span> watchSrc = [
+  path.join(__dirname, opt.dataDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>),
+  path.join(__dirname, opt.tmplDir, <span class="hljs-string">'**'</span>, <span class="hljs-string">'*'</span>)
 ]
 
 gulp.task(<span class="hljs-string">'wig:watch'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{

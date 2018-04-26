@@ -84,9 +84,16 @@ npm install wig
 gulpfile.jsにタスクを用意します。
 
 ```
-let Wig = require('wig');
-let builder;
-let opt = {
+var path = require('path');
+
+var gulp = require('gulp');
+var watch = require('gulp-watch');
+
+var Wig = require('wig');
+
+var builder;
+var opt = {
+  rootDir:__dirname, // プロジェクトのrootディレクトリ指定
   dataDir:"./data", // dataを格納するディレクトリ
   publicDir:"./public", // 出力（＝公開）ディレクトリ
   tmplDir:"./templates" // テンプレートを格納するディレクトリ
@@ -103,9 +110,9 @@ gulp.task('wig', function() {
   }
 });
 
-let watchSrc = [
-  path.join(rootPath, opt.dataDir, '**', '*'),
-  path.join(rootPath, opt.tmplDir, '**', '*')
+var watchSrc = [
+  path.join(__dirname, opt.dataDir, '**', '*'),
+  path.join(__dirname, opt.tmplDir, '**', '*')
 ]
 
 gulp.task('wig:watch', function() {
