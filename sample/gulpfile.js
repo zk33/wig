@@ -9,9 +9,11 @@ var Wig = require('wig');
 
 var builder;
 var opt = {
-  dataDir:"./data", // dataを格納するディレクトリ
-  publicDir:"./public", // 出力（＝公開）ディレクトリ
-  tmplDir:"./templates" // テンプレートを格納するディレクトリ
+  rootDir:__dirname, // プロジェクトのrootディレクトリ
+  dataDir:"data", // dataを格納するディレクトリ
+  publicDir:"public", // 出力（＝公開）ディレクトリ
+  tmplDir:"templates", // テンプレートを格納するディレクトリ
+  verbose:true
 };
 
 gulp.task('wig', function() {

@@ -8,8 +8,9 @@
   <header>
     <h1>{% if title %}{{ title }}{% else %}wig sample{% endif %}</h1>
   <main>
-  {% block main %}
-  {% endblock %}
+    {{ main }}
+    {% block main %}
+    {% endblock %}
   </main>
 </body>
 </html>
