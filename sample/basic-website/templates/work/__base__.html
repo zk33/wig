@@ -1,0 +1,11 @@
+{% extends '__base__.html' %}
+
+{% block main %}
+  <h2>works</h2>
+  <nav>
+    <a href="{{_rel_root}}/work/work1.html">work1</a> |
+    <a href="{{_rel_root}}/work/work2.html">work2</a>
+  </nav>
+  {% block work_main %}
+  {% endblock %}
+{% endblock %}

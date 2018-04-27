@@ -1,0 +1,29 @@
+{
+  "sitename":"wig sample",
+  "_contents":{
+    "index":{
+      "title":"index page"
+    },
+    "contact":{
+      "title":"contact page",
+      "email":"test@example.com"
+    },
+    "work":{
+      "_contents":{
+        "index":{
+          "title":"works index"
+        },
+        "work1":{
+          "title":"work1",
+          "_template":"work/work.html",
+          "workTitle":"awsesome work1"
+        },
+        "work2":{
+          "title":"work2",
+          "_template":"work/work.html",
+          "workTitle":"cool work2"
+        }
+      }
+    }
+  }
+}

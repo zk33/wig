@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+</head>
+<body>
+  <h1>{{ sitename }}</h1>
+  <nav>
+    <a href="{{_rel_root}}/index.html">index</a> |
+    <a href="{{_rel_root}}/contact.html">contact</a> |
+    <a href="{{_rel_root}}/work/index.html">works</a>
+  </nav>
+  <main>
+    {% block main %}
+    {% endblock %}
+  </main>
+</body>
+</html>
