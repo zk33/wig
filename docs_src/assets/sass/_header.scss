@@ -9,30 +9,61 @@
   height: 350px;
   box-sizing: border-box;
   padding:170px 0 0 260px;
+  @include screen_sm{
+    height: auto;
+    padding: 20px;
+    text-align: center;
+  }
 }
 .header-img{
   display: block;
   position: absolute;
   top:20px;
   left:0;
+  @include screen_sm{
+    position: static;
+  }
 }
 .header-img-img{
   width: 161px;
+  @include screen_sm{
+    width: 80px;
+  }
 }
 .header-h{
   font-family: $g_font_h;
   font-size: 52px;
   margin: 0;
   color:$g_color_text_h;
+  @include screen_sm{
+    font-size: 32px;
+  }
 }
 .header-desc{
   font-family: $g_font_h;
   margin:0;
   font-size: 20px;
   color:$g_color_text_h;
+  @include screen_sm{
+    font-size: 16px;
+  }
 }
 .header-nav{
   position: absolute;
   right: 0;
   top:20px;
+  @include screen_sm{
+    right: 20px;
+  }
+}
+.header-nav-link{
+  font-size: 28px;
+  transition: opacity .5s;
+  line-height: 1;
+  &:link,&:visited{
+    color:$g_color_text_h;
+  }
+  &:hover{
+    opacity: .8;
+  }
 }

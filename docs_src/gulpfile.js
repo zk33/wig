@@ -26,7 +26,7 @@ options.sass.cssnano.enabled = true;
 
 // icon font compile options ==================
 //options.icon.srcDir = 'assets/icons/';
-//options.icon.destDir = 'public/assets/fonts/';
+options.icon.destDir = '../docs/assets/fonts/';
 //options.icon.sassDir = '';
 //options.icon.fontName = 'icon';
 //options.icon.iconSassName = '_icon';

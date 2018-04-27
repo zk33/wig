@@ -6,6 +6,9 @@ html,body{
   font-size: $g_font_size;
   font-weight: 300;
   line-height: 1.78;
+  @include screen_sm{
+    font-size: $g_font_size_sm;
+  }
 }
 a{
   color:$g_color_link;

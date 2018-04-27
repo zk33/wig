@@ -1,0 +1,46 @@
+// NOTE: このファイルはgulpで自動生成しているので、手動での編集はしないでください
+
+@font-face {
+	font-family: "icon";
+	src: url('../fonts/icon.woff#{$iconhash}') format('woff'),
+		url('../fonts/icon.ttf#{$iconhash}') format('truetype');
+}
+
+.icon,
+[class*=" icon-"],
+[class^="icon-"] {
+  display: inline-block;
+  font-family: 'icon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-spin {
+  animation: icon-spin 2s infinite linear
+}
+
+.icon-pulse {
+  animation: icon-spin 1s infinite steps(8)
+}
+
+@keyframes icon-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg)
+    }
+}
+
+
+.icon-github:before{ content:"\F001"}
+$icon_github:"\F001";
+
