@@ -1,0 +1,8 @@
+{
+  "main":"main contents in dir2 __init__.json",
+  "_contents":{
+    "sub":{
+      "title":"sub in dir2 directory"
+    }
+  }
+}
