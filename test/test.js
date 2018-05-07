@@ -16,7 +16,7 @@ describe('Constructor', function() {
       assert.equal(w.options.rootDir, '');
       assert.equal(w.options.dataDir, './data');
       assert.equal(w.options.tmplDir, './templates');
-      assert.equal(w.options.outDir, './dist');
+      assert.equal(w.options.publicDir, './public');
       assert.equal(w.options.verbose, false);
       assert.equal(typeof(w.options.vars), 'object');
       assert.equal(w.options.renderer, 'nunjucks');
@@ -26,7 +26,7 @@ describe('Constructor', function() {
         rootDir: 'root',
         dataDir: './data2',
         tmplDir: './templates2',
-        outDir: './dist2',
+        publicDir: './dist2',
         verbose: true,
         vars: {
           'initial': 'initial var'
@@ -35,7 +35,7 @@ describe('Constructor', function() {
       });
       assert.equal(w.options.dataDir, './data2');
       assert.equal(w.options.tmplDir, './templates2');
-      assert.equal(w.options.outDir, './dist2');
+      assert.equal(w.options.publicDir, './dist2');
       assert.equal(w.options.verbose, true);
       assert.equal(w.options.vars.initial, 'initial var');
       assert.equal('nunjucks', w.options.renderer);
@@ -56,7 +56,7 @@ describe('Constructor', function() {
       options = {
         dataDir: data,
         tmplDir: template,
-        outDir: dist,
+        publicDir: dist,
         verbose: false,
         vars: {
           'initial': 'initial var'
