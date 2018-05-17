@@ -1,0 +1,15 @@
+{
+  "_ext":"xml",
+  "_template":"actless/atom.xml",
+  "**NOTE**":"===== UPDATE BELOW ========",
+  "rssSiteTitle":"RSS title(generally Your Website Name)",
+  "rssSiteLink":"http://example.com",
+  "rssBaseUrl":"http://example.com",
+  "rssAuthors":[
+    {
+      "name":"author name or company name",
+      "email":"author@example.com",
+      "url":"http://example.com/author"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <title>wig.js - DRY-concept static web/document generator</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{_rel_root}}/assets/css/style.css?{{assetHash['style.css']}}">
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-content">
+        <figure class="header-img">
+          <img class="header-img-img" src="{{_rel_root}}/assets/img/img.png" alt="" />
+        </figure>
+        <h1 class="header-h">{% raw %}{{wig.js}}{% endraw %}</h1>
+        <p class="header-desc">DRY-concept static site/document generator</p>
+        <nav class="header-nav">
+          <a class="header-nav-link" href="https://github.com/zk33/wig"><span class="icon icon-github" aria-label="github"></span></a>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <nav class="main-nav">
+        <ul class="main-nav-items">
+          {% set items=[
+              ['#what-is-wig-','What is wig?'],
+              ['#concept','Concept'],
+              ['#getting-started','Getting started'],
+              ['#setup-data','Setup data'],
+              ['#templating','Templating'],
+              ['#js-api','JS API'],
+              ['#command-line-api','Command Line API']
+            ] %}
+          {% for item in items %}
+          <li class="main-nav-item">
+            <a class="main-nav-item-link" href="{{item[0]}}">{{item[1]}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% block main %}
+      <div class="main-content">
+        {{_html|safe}}
+      </div>
+      {% endblock %}
+    </main>
+    <footer>
+      {% block footer %}{% endblock %}
+    </footer>
+    <script src="{{_rel_root}}/assets/js/main.js"></script>
+  </body>
+</html>

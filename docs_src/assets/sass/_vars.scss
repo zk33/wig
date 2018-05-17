@@ -1,0 +1,26 @@
+$g_radius:8px;
+
+
+$g_color_bg_h:#95e2dc;
+$g_color_bg_main:#fff;
+$g_color_link:darken($g_color_bg_h,24%);
+$g_color_brand:$g_color_bg_h;
+$g_color_border:#ccc;
+$g_color_text_h: #3c2b00;
+$g_color_text: #665;
+$g_color_text_light:#808080;
+$g_color_text_bg_dark:#f8f7f0;
+
+$g_font_base: -apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3",Meiryo,メイリオ,"MS PGothic",sans-serif;
+$g_font_h:Nunito, sans-serif;
+$g_font_code: Consolas, 'Liberation Mono', Menlo,  Courier, emoji, 'Hiragino Kaku Gothic Pro', monospace;
+
+$g_font_size:16px;
+$g_font_size_sm:14px;
+
+// responsive breakpoints
+$g_width_hh_regular: 370px; // iPhone 6 width = 375px
+$g_width_hh_max:480px;
+$g_width_sm_max:800px;
+$g_width_md_max:980px;
+$g_width_lg_max:1300px;

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }} - wig sample</title>
+</head>
+<body>
+  <header>
+    <h1>{% if title %}{{ title }}{% else %}wig sample{% endif %}</h1>
+    <nav>
+      <a href="{{ _rel_root }}/index.html">index</a> |
+      <a href="{{ _rel_root }}/contact.html">contact</a> |
+      <a href="{{ _rel_root }}/work/index.html">work</a>
+    </nav>
+  </header>
+  <main>
+    {{ _html | safe }}
+  </main>
+</body>
+</html>
