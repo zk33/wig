@@ -52,7 +52,8 @@
 #author: your name
 --->
         <h1 id="what-is-wig-">What is wig?</h1>
-        <p>wigは、素早く確実にWebサイトを更新し続けるために作られた、静的サイトジェネレータです。
+        <p>
+          <strong>wig</strong>は、素早く確実にWebページを更新し続けるために作られた、静的サイト/ドキュメントジェネレータです。
           <br>JSONなどで定義されたデータと、テンプレートを結合し、静的ページを出力します。</p>
         <div class="main-chart">
           <div class="main-chart-conbine">
@@ -74,25 +75,27 @@
               <h2>
           </div>
         </div>
-        <h1 id="concept">Concept</h1>
+        <h2 id="concept">Concept</h2>
         <p>wigのコンセプトは「
           <strong>DRY(Don&#39;t Repeat Yourself)</strong>」です。 </p>
-        <p>wigは元々、更新頻度の高い、多言語展開された中規模Webサイトを、長く更新し続けていくために作られたツールです。多数のページを確実に更新・管理していくため、</p>
+        <p>wigは元々、多言語展開された中規模Webサイトを、長く更新/メンテナンスし続けていくために作られたツールです。 たくさんのページを確実に更新・管理していくために、</p>
         <ul>
-          <li>できる限りコピペしないで済む</li>
-          <li>最低限の修正作業で、確実に全てのページが更新されるようにする</li>
-          <li>大きなレイアウト変更にも迅速に対応できるようにする</li>
+          <li>
+            <strong>最低限の修正作業で、確実に全てのページが、高速に更新されるようにする</strong>
+          </li>
         </ul>
-        <p>ということを実現する必要がありました。その実現のため、</p>
+        <p>ということを実現する必要がありました。そのために</p>
         <ul>
-          <li>継承やマクロなどを駆使してDRYに書けるテンプレートエンジン
-            <strong>
+          <li>
+            <strong>継承やマクロなどを駆使してDRYに書けるテンプレートエンジン
               <a href="https://mozilla.github.io/nunjucks/">nunjucks</a>
             </strong>
           </li>
-          <li>出力ページや、テンプレートに渡す変数をDRYに定義できる<code>data</code>の仕組み</li>
+          <li>
+            <strong>出力ページや、テンプレートに渡す変数をDRYに定義できる<code>data</code>の仕組み</strong>
+          </li>
         </ul>
-        <p>を組み合わせて作られた静的サイトジェネレータが、wigです。</p>
+        <p>を組み合わせて作られた静的サイト/ドキュメントジェネレータが、wigです。</p>
         <h1 id="getting-started">Getting started</h1>
         <h2 id="1-">1.ディレクトリの準備</h2>
         <p>プロジェクトのルートディレクトリに、３つのディレクトリを準備します。</p> <pre><code class="lang-text">/data ・・ データを格納します
@@ -204,9 +207,10 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
         <p>※ JSONやJS、YAMLファイルの場合は、ファイル内に書かれたデータ内容が、変数としてテンプレートに渡されます。</p>
         <p>※ ページとして出力したい場合、ファイル名を<code>_</code>（アンダースコア）から始めることはできません。<code>_</code>から始まったファイルは、変数として処理されます。</p>
         <h3 id="1-2-_contents-">1-2.<code>_contents</code>変数を使う</h3>
-        <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>という変数を設定すると、それに基づいてページが出力されます。
-          <br>その際、<code>_contents</code>が定義されているファイルの名前がディレクトリ名になります。
-          <br><code>_contents</code>の中身を、ファイルを置いたディレクトリと同じ階層に出力したい場合は、<code>__init__.json</code>というファイル内に<code>_contents</code>を指定してください。 <code>_contents</code>は入れ子にできるので、1ファイルでサイトの全てのページを定義することもできます。</p>
+        <p><code>data</code>ディレクトリ内に置いたJSONファイル（またはJSファイル）で、<code>_contents</code>という変数を設定すると、それに基づいてページが出力されます。</p>
+        <p>その際、<code>_contents</code>が定義されているファイルの名前がディレクトリ名になります。</p>
+        <p><code>_contents</code>の中身を、ファイルを置いたディレクトリと同じ階層に出力したい場合は、<code>__init__.json</code>というファイル内に<code>_contents</code>を指定してください。</p>
+        <p><code>_contents</code>は入れ子にできるので、1ファイルでサイトの全てのページを定義することもできます。</p>
         <p>たとえば以下の内容を、</p> <pre><code class="lang-js">{
   <span class="hljs-string">"_contents"</span>:{
     <span class="hljs-string">"index"</span>:{
@@ -246,10 +250,10 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
 /contact.html
 </code></pre>
         <p>が出力されます。</p>
-        <p>※ 出力されるファイルの拡張子は「<code>_ext</code>」という変数で指定することができます。</p>
+        <p>※ 出力されるファイルの拡張子は、「<code>_ext</code>」という変数（後述）で指定することができます。</p>
         <h2 id="2-">2.変数の定義</h2>
-        <p><code>data</code>ディレクトリのファイルでは、ページの定義だけでなく、テンプレートに渡す変数を指定することができます。
-          <br>ページごとにタイトルやdescriptionを設定したり、テンプレート上でページの処理を分岐させるためにIDを渡すなど、様々に活用できます。</p>
+        <p><code>data</code>ディレクトリのファイルでは、ページの定義だけでなく、テンプレートに渡す変数を指定することができます。</p>
+        <p>ページごとにタイトルやdescriptionを設定したり、テンプレート上でページの処理を分岐させるためにIDを渡すなど、様々に活用できます。</p>
         <h3 id="2-1-">2-1. ファイルで定義する</h3>
         <p><code>data</code>ディレクトリ内に置かれたファイルのうち、ファイル名がアンダースコア（<code>_</code>）から始まるものは、変数として扱われます。</p>
         <p>たとえば、<code>data/_hello.txt</code>の中身は、「hello」という名前でテンプレートに渡されます。</p>
@@ -291,8 +295,8 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
 </code></pre>
         <p>が出力されます。この時、</p>
         <ul>
-          <li><code>/index.html</code>のテンプレート上では<code>foo</code>という変数で、<code>/_foo.txt</code>の中身を出力できます</li>
-          <li><code>/bar/index.html</code>では、<code>foo</code>と<code>bar</code>という変数で、<code>/_foo.txt</code>と<code>/bar/_bar.txt</code>の中身を出力できます</li>
+          <li><code>/index.html</code>のテンプレート上では<code>foo</code>という変数名で、<code>/_foo.txt</code>の中身を出力できます</li>
+          <li><code>/bar/index.html</code>では、<code>foo</code>と<code>bar</code>という変数名で、<code>/_foo.txt</code>と<code>/bar/_bar.txt</code>の中身を出力できます</li>
         </ul>
         <p>
           <strong>親階層で定義した変数は全て子階層で使える</strong> ので、たとえばルートディレクトリ内に置いた<code>__init__.json</code>で設定した変数は、グローバル変数として全てのページで参照できます。</p>
@@ -318,7 +322,7 @@ gulp.task(<span class="hljs-string">'default'</span>,[<span class="hljs-string">
         <p><code>data</code>ディレクトリに置くファイルとして、対応しているファイルの形式は、</p>
         <ul>
           <li>JSON（.json）</li>
-          <li>JavaScript（.js/nodeモジュール形式で、Objectを返すもの）</li>
+          <li>JavaScript（.js ※nodeモジュール形式で、Objectを返してください）</li>
           <li>YAML（.yml/.yaml）</li>
           <li>Markdown（.md）</li>
         </ul>
@@ -382,7 +386,7 @@ my awesome markdown text
         <p>というように必要なページやディレクトリ単位で<code>_ext</code>変数を設定してください。</p>
         <h3 id="_template"><code>_template</code></h3>
         <p>テンプレートのファイル名を指定します。
-          <br>wigでは、ファイル出力時にどのテンプレートを使うかはルールに基づいて自動で決定されますが、そのルール外のテンプレートを使いたい場合に指定してください。</p>
+          <br>wigでは、ファイル出力時にどのテンプレートを使うかはルールに基づいて自動で決定されます（後述）が、そのルール外のテンプレートを使いたい場合に指定してください。</p>
         <p>こちらも<code>_ext</code>と同様、ディレクトリやファイル単位で指定できます。 </p> <pre><code class="lang-js">{
   <span class="hljs-string">"_contents"</span>:{
     <span class="hljs-string">"index"</span>:{
