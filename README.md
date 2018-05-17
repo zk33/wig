@@ -4,9 +4,11 @@
   </a>
 </p>
 
-<h2 align="center">wig.js</h2>
+<h1 align="center">wig.js</h1>
 
+<p align="center">
 **DRY-concept static site/document generator**
+</p>
 
 ## Documentation
 
