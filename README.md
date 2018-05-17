@@ -7,7 +7,7 @@
 <h1 align="center">wig.js</h1>
 
 <p align="center">
-**DRY-concept static site/document generator**
+<strong>DRY-concept static site/document generator</strong>
 </p>
 
 ## Documentation
