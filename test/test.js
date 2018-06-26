@@ -45,7 +45,7 @@ describe('Constructor', function() {
 
 
 
-['', 'multiDir'].forEach(function(renderer) {
+['', 'multiDir', 'pageList'].forEach(function(renderer) {
 
   describe('Wig' + renderer, function() {
     var dist = path.join(__dirname, 'dist');
@@ -68,6 +68,10 @@ describe('Constructor', function() {
           options.renderer = 'nunjucks';
           options.tmplDir = ['tmpl', template];
         }
+        if (renderer === 'pageList') {
+          options.renderer = 'nunjucks';
+          options.pageList = true;
+        }
       }
       if (fs.existsSync(dist)) {
         rimraf.sync(dist);
@@ -88,7 +92,7 @@ describe('Constructor', function() {
         this.timeout(3000);
         var w = new Wig(options);
         //add filter
-        w.addRendererFilter('date', function(date,postfix){
+        w.addRendererFilter('date', function(date, postfix) {
           var d = new Date(Date.parse(date));
           return d.toDateString() + postfix;
         });
@@ -111,6 +115,7 @@ describe('Constructor', function() {
           var ymlpage = path.join(dist, 'yaml-page.html');
           var updated = path.join(dist, 'updated.html');
           var created = path.join(dist, 'created.html');
+          var pagelist = path.join(dist, 'pagelist.html');
 
           // output files
           assert(fs.existsSync(index), 'index.html should generated');
@@ -126,6 +131,8 @@ describe('Constructor', function() {
           assert(fs.existsSync(ymlpage), 'yaml-page.html should generated via yaml-page.yaml');
           assert(fs.existsSync(updated), 'updated.html should generated via updated.yaml');
           assert(fs.existsSync(created), 'created.html should generated via created.yaml');
+          assert(fs.existsSync(pagelist), 'pagelist.html should generated');
+
 
           //content
           var indexContents = fs.readFileSync(index, {
@@ -156,6 +163,9 @@ describe('Constructor', function() {
             encoding: 'utf8'
           }).split("\n");
           var createdContents = fs.readFileSync(created, {
+            encoding: 'utf8'
+          }).split("\n");
+          var pageListContents = fs.readFileSync(pagelist, {
             encoding: 'utf8'
           }).split("\n");
 
@@ -205,6 +215,13 @@ describe('Constructor', function() {
 
           //parameters assigned with constructor,build()
           assert.equal(indexContents[6], 'initial var', 'parameter assigned with constructor should be used');
+
+          //pageList
+          if (renderer === 'pageList') {
+            assert.equal(pageListContents[2], 'markdown-page.html', '_pages parameter must generated and work properly if options.pageList=true');
+          } else {
+            assert.notEqual(pageListContents[2], 'markdown-page.html', '_pages parameter must generated and work properly if options.pageList=true');
+          }
 
           w.build({
             vars: {

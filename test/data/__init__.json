@@ -15,6 +15,9 @@
       "title":"php",
       "_ext":"php"
     },
+    "pagelist":{
+      "title":"pagelist"
+    },
     "sjis":{
       "title":"シフトJISの日本語",
       "_encoding":"Shift_JIS"
