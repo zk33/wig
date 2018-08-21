@@ -11,8 +11,9 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-shell": "^0.6.5",
-    "gulp-watch": "^5.0.0",
-    "wig": "^1.0.7"
+    "gulp-watch": "^5.0.1",
+    "lodash": "^4.17.10",
+    "wig": "^1.0.10"
   },
   "dependencies": {}
 }
