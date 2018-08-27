@@ -1,6 +1,6 @@
 {
   "name": "wig",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "DRY-concept static site/document generator",
   "homepage": "https://zk33.github.io/wig/",
   "main": "index.js",
