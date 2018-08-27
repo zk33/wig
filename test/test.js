@@ -116,6 +116,7 @@ describe('Constructor', function() {
           var updated = path.join(dist, 'updated.html');
           var created = path.join(dist, 'created.html');
           var pagelist = path.join(dist, 'pagelist.html');
+          var htmlInData = path.join(dist, 'html.html');
 
           // output files
           assert(fs.existsSync(index), 'index.html should generated');
@@ -132,6 +133,8 @@ describe('Constructor', function() {
           assert(fs.existsSync(updated), 'updated.html should generated via updated.yaml');
           assert(fs.existsSync(created), 'created.html should generated via created.yaml');
           assert(fs.existsSync(pagelist), 'pagelist.html should generated');
+          assert(fs.existsSync(htmlInData), 'html.html should generated');
+
 
 
           //content
@@ -166,6 +169,9 @@ describe('Constructor', function() {
             encoding: 'utf8'
           }).split("\n");
           var pageListContents = fs.readFileSync(pagelist, {
+            encoding: 'utf8'
+          }).split("\n");
+          var htmlInDataContents = fs.readFileSync(htmlInData, {
             encoding: 'utf8'
           }).split("\n");
 
@@ -222,6 +228,9 @@ describe('Constructor', function() {
           } else {
             assert.notEqual(pageListContents[2], 'markdown-page.html', '_pages parameter must generated and work properly if options.pageList=true');
           }
+          //html file in data Directory
+          assert.equal(htmlInDataContents[2], '<h1>test</h1>', 'NOT underscored .html file in data directory should generate page');
+          assert.equal(htmlInDataContents[3], '+html+<h2>test2</h2>', 'NOT underscored .html file in data directory should generate page');
 
           w.build({
             vars: {
