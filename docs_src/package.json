@@ -9,6 +9,6 @@
   "author": "Takaaki Yamazaki (@zk33)",
   "license": "ISC",
   "devDependencies": {
-    "actless": "^5.0.7"
+    "actless": "^9.0.0"
   }
 }
